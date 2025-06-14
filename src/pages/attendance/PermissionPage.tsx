@@ -146,7 +146,7 @@ const PermissionPage: React.FC = () => {
                   permissionRequests.map(request => (
                     <tr key={request.id}>
                       <td>{format(new Date(request.date), 'dd MMM yyyy')}</td>
-                      <td>{`${format(new Date(request.startTime), 'hh:mm a')} - ${format(new Date(request.endTime), 'hh:mm a')}`}</td>
+                      <td>{`${request.startTime.substring(0, 5)} - ${request.endTime.substring(0, 5)}`}</td>
                       <td>{request.reason}</td>
                       <td>
                         <div className="flex items-center gap-2">

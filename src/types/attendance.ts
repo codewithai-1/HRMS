@@ -18,7 +18,7 @@ export enum RegularizationStatus {
 export interface AttendanceRecord {
   id: string;
   employeeId: string;
-  employee: User;
+  employee?: User;
   date: string;
   clockIn: string | null;
   clockOut: string | null;

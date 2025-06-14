@@ -138,8 +138,8 @@ const RegularizationPage: React.FC = () => {
                   regularizationRequests.map(request => (
                     <tr key={request.id}>
                       <td>{format(new Date(request.date), 'dd MMM yyyy')}</td>
-                      <td>{request.requestedClockIn ? format(new Date(request.requestedClockIn), 'hh:mm a') : '-'}</td>
-                      <td>{request.requestedClockOut ? format(new Date(request.requestedClockOut), 'hh:mm a') : '-'}</td>
+                      <td>{request.requestedClockIn ? request.requestedClockIn.substring(0, 5) : '-'}</td>
+                      <td>{request.requestedClockOut ? request.requestedClockOut.substring(0, 5) : '-'}</td>
                       <td>{request.reason}</td>
                       <td>
                         <div className="flex items-center gap-2">

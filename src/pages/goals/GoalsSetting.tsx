@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm, useFieldArray, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
   PlusIcon,
@@ -33,13 +33,14 @@ interface FormValues {
 }
 
 const GoalsSetting: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<GoalStatus>(GoalStatus.DRAFT);
-  const [goalsGroupId, setGoalsGroupId] = useState<string | null>(null);
+  const [goalsGroupId, setGoalsGroupId] = useState<string | null>(id || null);
   const navigate = useNavigate();
 
-  const { register, control, handleSubmit, watch, formState: { errors } } = useForm<FormValues>({
+  const { register, control, handleSubmit, watch, reset, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
       goals: [
         {
@@ -60,6 +61,28 @@ const GoalsSetting: React.FC = () => {
     name: 'goals'
   });
 
+  useEffect(() => {
+    if (id) {
+      fetchGoalsGroup();
+    }
+  }, [id]);
+
+  const fetchGoalsGroup = async () => {
+    try {
+      setLoading(true);
+      const response = await goalsService.getGoalById(id!);
+      const goalsData = response.data;
+      setStatus(goalsData.status);
+      reset({ goals: goalsData.goals });
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching goals:', err);
+      setError('Failed to load goals. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const addGoal = () => {
     append({
       name: '',
@@ -75,9 +98,14 @@ const GoalsSetting: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       setLoading(true);
-      const response = await goalsService.createGoal(data);
-      setGoalsGroupId(response.data.id);
-      setStatus(GoalStatus.DRAFT);
+      if (goalsGroupId) {
+        // Update existing goals
+        await goalsService.updateGoal(goalsGroupId, data);
+      } else {
+        // Create new goals
+        const response = await goalsService.createGoal(data);
+        setGoalsGroupId(response.data.id);
+      }
       setError(null);
     } catch (err) {
       console.error('Error saving goals:', err);
@@ -135,6 +163,12 @@ const GoalsSetting: React.FC = () => {
     );
   };
 
+  const getCompletionPercentageClass = (value: number) => {
+    if (value < 33) return 'low';
+    if (value < 66) return 'medium';
+    return 'high';
+  };
+
   return (
     <div className="goals-page-container">
       <div className="goals-header">
@@ -147,9 +181,9 @@ const GoalsSetting: React.FC = () => {
             <ArrowLeftIcon className="icon" />
             Back
           </button>
-          <h1>Goals Setting</h1>
+          <h1>{id ? 'Edit Goals' : 'Create Goals'}</h1>
           <p className="goals-header-description">
-            Set your performance goals and track your progress
+            {id ? 'Edit your performance goals' : 'Set your performance goals and track your progress'}
           </p>
         </div>
         <div className="goals-header-right">
@@ -164,163 +198,130 @@ const GoalsSetting: React.FC = () => {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="goals-content">
-          <div className="goals-card">
-            <div className="goals-card-header">
-              <h2>Goals Group</h2>
-            </div>
-            <div className="goals-card-body">
-              {fields.map((field, index) => (
-                <div key={field.id} className="goal-form-group">
-                  {fields.length > 1 && (
-                    <button
-                      type="button"
-                      className="remove-goal"
-                      onClick={() => remove(index)}
-                    >
-                      <TrashIcon className="w-4 h-4" />
-                    </button>
-                  )}
+        <div className="goals-card">
+          <div className="goals-card-header">
+            <h2>Goals Group</h2>
+          </div>
+          <div className="goals-card-body">
+            {fields.map((field, index) => (
+              <div key={field.id} className="goal-form-group">
+                {fields.length > 1 && (
+                  <button
+                    type="button"
+                    className="remove-goal"
+                    onClick={() => remove(index)}
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                )}
 
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor={`goals.${index}.name`}>Goal Name</label>
-                      <input
-                        type="text"
-                        id={`goals.${index}.name`}
-                        {...register(`goals.${index}.name`, { required: true })}
-                        className={errors.goals?.[index]?.name ? 'error' : ''}
-                      />
-                      {errors.goals?.[index]?.name && (
-                        <span className="error-message">Goal name is required</span>
-                      )}
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor={`goals.${index}.goalType`}>Goal Type</label>
-                      <select
-                        id={`goals.${index}.goalType`}
-                        {...register(`goals.${index}.goalType`)}
-                      >
-                        {Object.values(GoalType).map(type => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
+                <div className="form-row">
                   <div className="form-group">
-                    <label htmlFor={`goals.${index}.description`}>Goal Description</label>
-                    <textarea
-                      id={`goals.${index}.description`}
-                      {...register(`goals.${index}.description`, { required: true })}
-                      className={errors.goals?.[index]?.description ? 'error' : ''}
+                    <label htmlFor={`goals.${index}.name`}>Goal Name</label>
+                    <input
+                      type="text"
+                      id={`goals.${index}.name`}
+                      {...register(`goals.${index}.name`, { required: true })}
+                      className={errors.goals?.[index]?.name ? 'error' : ''}
                     />
-                    {errors.goals?.[index]?.description && (
-                      <span className="error-message">Goal description is required</span>
+                    {errors.goals?.[index]?.name && (
+                      <span className="error-message">Goal name is required</span>
                     )}
                   </div>
 
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor={`goals.${index}.accomplishmentDate`}>Accomplishment Date</label>
-                      <input
-                        type="date"
-                        id={`goals.${index}.accomplishmentDate`}
-                        {...register(`goals.${index}.accomplishmentDate`, { required: true })}
-                        className={errors.goals?.[index]?.accomplishmentDate ? 'error' : ''}
-                      />
-                      {errors.goals?.[index]?.accomplishmentDate && (
-                        <span className="error-message">Accomplishment date is required</span>
-                      )}
-                    </div>
+                  <div className="form-group">
+                    <label htmlFor={`goals.${index}.goalType`}>Goal Type</label>
+                    <select
+                      id={`goals.${index}.goalType`}
+                      {...register(`goals.${index}.goalType`)}
+                    >
+                      {Object.values(GoalType).map(type => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-                    <div className="form-group">
-                      <label htmlFor={`goals.${index}.completionPercentage`}>Completion Percentage</label>
-                      <div className="slider-container">
-                        <div className="slider-label">
-                          <span>0%</span>
-                          <span className="completion-percentage">
-                            {watch(`goals.${index}.completionPercentage`)}%
-                          </span>
-                          <span>100%</span>
-                        </div>
-                        <input
-                          type="range"
-                          id={`goals.${index}.completionPercentage`}
-                          min="0"
-                          max="100"
-                          step="5"
-                          className="percentage-slider"
-                          {...register(`goals.${index}.completionPercentage`, { 
-                            valueAsNumber: true 
-                          })}
-                        />
-                      </div>
-                    </div>
+                <div className="form-group">
+                  <label htmlFor={`goals.${index}.description`}>Description</label>
+                  <textarea
+                    id={`goals.${index}.description`}
+                    {...register(`goals.${index}.description`, { required: true })}
+                    className={errors.goals?.[index]?.description ? 'error' : ''}
+                  />
+                  {errors.goals?.[index]?.description && (
+                    <span className="error-message">Description is required</span>
+                  )}
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor={`goals.${index}.accomplishmentDate`}>Accomplishment Date</label>
+                    <input
+                      type="date"
+                      id={`goals.${index}.accomplishmentDate`}
+                      {...register(`goals.${index}.accomplishmentDate`, { required: true })}
+                      className={errors.goals?.[index]?.accomplishmentDate ? 'error' : ''}
+                    />
+                    {errors.goals?.[index]?.accomplishmentDate && (
+                      <span className="error-message">Accomplishment date is required</span>
+                    )}
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor={`goals.${index}.employeeComments`}>Employee Comments</label>
-                    <textarea
-                      id={`goals.${index}.employeeComments`}
-                      {...register(`goals.${index}.employeeComments`)}
-                    />
-                  </div>
-
-                  {status === GoalStatus.REVIEW_PENDING || status === GoalStatus.COMPLETED ? (
-                    <div className="form-group">
-                      <label htmlFor={`goals.${index}.managerComments`}>Manager Comments</label>
-                      <textarea
-                        id={`goals.${index}.managerComments`}
-                        {...register(`goals.${index}.managerComments`)}
-                        readOnly={status === GoalStatus.COMPLETED}
+                    <label htmlFor={`goals.${index}.completionPercentage`}>Completion Percentage</label>
+                    <div className="progress-bar-wrapper">
+                      <div className="progress-bar">
+                        <div 
+                          className={`progress-fill ${getCompletionPercentageClass(watch(`goals.${index}.completionPercentage`))}`}
+                          style={{ width: `${watch(`goals.${index}.completionPercentage`)}%` }}
+                        />
+                        <span className="progress-text">
+                          {watch(`goals.${index}.completionPercentage`)}%
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        id={`goals.${index}.completionPercentage`}
+                        min="0"
+                        max="100"
+                        step="5"
+                        className="progress-input"
+                        {...register(`goals.${index}.completionPercentage`, { 
+                          valueAsNumber: true 
+                        })}
                       />
                     </div>
-                  ) : null}
+                  </div>
                 </div>
-              ))}
-
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={addGoal}
-              >
-                <PlusIcon className="w-4 h-4 mr-2" />
-                Add Goal
-              </button>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="goals-footer">
-          <div>
-            {status === GoalStatus.DRAFT && (
-              <button
-                type="button"
-                className="btn btn-secondary mr-2"
-                onClick={handleSubmitForApproval}
-                disabled={loading || !goalsGroupId}
-              >
-                <PaperAirplaneIcon className="w-4 h-4 mr-2" />
-                Submit for Approval
-              </button>
-            )}
-          </div>
-
-          <div>
+          {status === GoalStatus.DRAFT && (
             <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={loading}
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleSubmitForApproval}
+              disabled={loading || !goalsGroupId}
             >
-              Save Goals
+              <PaperAirplaneIcon className="w-4 h-4 mr-2" />
+              Submit for Approval
             </button>
-          </div>
+          )}
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={loading}
+          >
+            {id ? 'Update Goals' : 'Save Goals'}
+          </button>
         </div>
       </form>
     </div>
   );
 };
 
-export default GoalsSetting; 
+export default GoalsSetting;

@@ -202,8 +202,8 @@ const AttendancePage: React.FC = () => {
                           {record.status}
                         </span>
                       </td>
-                      <td>{record.clockIn ? format(new Date(record.clockIn), 'hh:mm a') : '-'}</td>
-                      <td>{record.clockOut ? format(new Date(record.clockOut), 'hh:mm a') : '-'}</td>
+                      <td>{record.clockIn ? record.clockIn.substring(0, 5) : '-'}</td>
+                      <td>{record.clockOut ? record.clockOut.substring(0, 5) : '-'}</td>
                       <td>{record.totalHours.toFixed(2)}</td>
                       <td>{record.lateMinutes > 0 ? `${record.lateMinutes} min` : '-'}</td>
                       <td>{record.earlyExitMinutes > 0 ? `${record.earlyExitMinutes} min` : '-'}</td>

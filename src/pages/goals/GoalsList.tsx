@@ -173,21 +173,33 @@ const GoalsList: React.FC = () => {
                           <div className="flex space-x-2">
                             {/* Different actions based on status and role */}
                             {(goalsGroup.status === GoalStatus.DRAFT || goalsGroup.status === GoalStatus.REJECTED) && (
-                              <Link to={`/goals/edit/${goalsGroup.id}`} className="btn-icon text-blue-600 hover:text-blue-900">
+                              <button
+                                type="button"
+                                onClick={() => navigate(`/goals/edit/${goalsGroup.id}`)}
+                                className="btn-icon text-blue-600 hover:text-blue-900"
+                              >
                                 <PencilIcon className="w-5 h-5" />
-                              </Link>
+                              </button>
                             )}
                             
                             {(goalsGroup.status === GoalStatus.SUBMITTED || goalsGroup.status === GoalStatus.REVIEW_PENDING) && isManager && (
-                              <Link to={`/goals/review/${goalsGroup.id}`} className="btn-icon text-green-600 hover:text-green-900">
+                              <button
+                                type="button"
+                                onClick={() => navigate(`/goals/review/${goalsGroup.id}`)}
+                                className="btn-icon text-green-600 hover:text-green-900"
+                              >
                                 <EyeIcon className="w-5 h-5" />
-                              </Link>
+                              </button>
                             )}
                             
                             {/* View link is always available */}
-                            <Link to={`/goals/view/${goalsGroup.id}`} className="btn-icon text-gray-600 hover:text-gray-900">
+                            <button
+                              type="button"
+                              onClick={() => navigate(`/goals/view/${goalsGroup.id}`)}
+                              className="btn-icon text-gray-600 hover:text-gray-900"
+                            >
                               <DocumentTextIcon className="w-5 h-5" />
-                            </Link>
+                            </button>
                           </div>
                         </td>
                       </tr>

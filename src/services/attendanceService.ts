@@ -64,7 +64,7 @@ const attendance = {
     employeeId?: string;
     status?: string;
   }) =>
-    api.get<AttendanceRecord[]>('/attendance/records', { params }),
+    api.get<AttendanceRecord[]>('/attendance-records', { params }),
   
   getStats: (params?: {
     startDate?: string;
