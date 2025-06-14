@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  @variant dark {
+    /* Add dark mode specific variable overrides */
+    --color-neutral-50: #1a1a1a;
+    --color-neutral-100: #262626;
+    --color-neutral-200: #404040;
+    --color-neutral-300: #525252;
+    --color-neutral-400: #737373;
+    --color-neutral-500: #a3a3a3;
+    --color-neutral-600: #d4d4d4;
+    --color-neutral-700: #e5e5e5;
+    --color-neutral-800: #f5f5f5;
+    --color-neutral-900: #fafafa;
+    --color-neutral-950: #ffffff;
+  }
+}
+
+@theme {
+  /* Use neutral colors for our primary theme colors */
+  --color-primary-50: var(--color-blue-50);
+  --color-primary-100: var(--color-blue-100);
+  --color-primary-200: var(--color-blue-200);
+  --color-primary-300: var(--color-blue-300);
+  --color-primary-400: var(--color-blue-400);
+  --color-primary-500: var(--color-blue-500);
+  --color-primary-600: var(--color-blue-600);
+  --color-primary-700: var(--color-blue-700);
+  --color-primary-800: var(--color-blue-800);
+  --color-primary-900: var(--color-blue-900);
+  --color-primary-950: var(--color-blue-950);
+  
+  /* Add any other custom colors */
+  --color-secondary-50: var(--color-purple-50);
+  --color-secondary-100: var(--color-purple-100);
+  --color-secondary-200: var(--color-purple-200);
+  --color-secondary-300: var(--color-purple-300);
+  --color-secondary-400: var(--color-purple-400);
+  --color-secondary-500: var(--color-purple-500);
+  --color-secondary-600: var(--color-purple-600);
+  --color-secondary-700: var(--color-purple-700);
+  --color-secondary-800: var(--color-purple-800);
+  --color-secondary-900: var(--color-purple-900);
+  --color-secondary-950: var(--color-purple-950);
+}
+
+@layer base {
+  :root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 transition-colors;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none;
+  }
+
+  .btn-secondary {
+    @apply bg-neutral-200 text-neutral-800 hover:bg-neutral-300 focus:ring-2 focus:ring-neutral-300 focus:ring-offset-2 focus:outline-none;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none;
+  }
+
+  .card {
+    @apply bg-white dark:bg-neutral-800 shadow-md rounded-lg p-6;
+  }
+
+  .form-input {
+    @apply w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-neutral-900 transition-colors;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1;
+  }
+
+  .form-error {
+    @apply text-sm text-red-600 dark:text-red-500 mt-1;
+  }
+}

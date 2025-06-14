@@ -1,0 +1,1447 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "employeeId": "EMP001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@company.com",
+      "departmentId": "1",
+      "role": "ADMIN",
+      "isActive": true,
+      "createdAt": "2024-01-15T08:00:00Z",
+      "updatedAt": "2024-01-15T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "EMP002",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@company.com",
+      "departmentId": "2",
+      "role": "MANAGER",
+      "isActive": true,
+      "createdAt": "2024-01-16T08:00:00Z",
+      "updatedAt": "2024-01-16T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "employeeId": "EMP003",
+      "firstName": "Mike",
+      "lastName": "Johnson",
+      "email": "mike.johnson@company.com",
+      "departmentId": "1",
+      "role": "EMPLOYEE",
+      "isActive": true,
+      "createdAt": "2024-01-17T08:00:00Z",
+      "updatedAt": "2024-01-17T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "employeeId": "EMP004",
+      "firstName": "Sarah",
+      "lastName": "Wilson",
+      "email": "sarah.wilson@company.com",
+      "departmentId": "3",
+      "role": "HR",
+      "isActive": true,
+      "createdAt": "2024-01-18T08:00:00Z",
+      "updatedAt": "2024-01-18T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "employeeId": "EMP005",
+      "firstName": "David",
+      "lastName": "Brown",
+      "email": "david.brown@company.com",
+      "departmentId": "2",
+      "role": "EMPLOYEE",
+      "isActive": true,
+      "createdAt": "2024-01-19T08:00:00Z",
+      "updatedAt": "2024-01-19T08:00:00Z"
+    }
+  ],
+  "departments": [
+    {
+      "id": 1,
+      "name": "Engineering",
+      "description": "Software development and technical operations",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Marketing",
+      "description": "Marketing and brand management",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Human Resources",
+      "description": "HR operations and employee management",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Finance",
+      "description": "Financial planning and accounting",
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Sales",
+      "description": "Sales and customer relations",
+      "createdAt": "2024-01-01T08:00:00Z"
+    }
+  ],
+  "roles": [
+    {
+      "id": "1",
+      "name": "Administrator",
+      "description": "Full system access and management",
+      "permissions": ["CREATE", "READ", "UPDATE", "DELETE"],
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Manager",
+      "description": "Team management and oversight",
+      "permissions": ["CREATE", "READ", "UPDATE"],
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "name": "HR Specialist",
+      "description": "Human resources operations",
+      "permissions": ["CREATE", "READ", "UPDATE"],
+      "createdAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Employee",
+      "description": "Standard employee access",
+      "permissions": ["READ", "UPDATE"],
+      "createdAt": "2024-01-01T08:00:00Z"
+    }
+  ],
+  "goals": [
+    {
+      "id": "goal-1",
+      "name": "Complete React Training",
+      "description": "Complete advanced React training course and implement best practices in current projects",
+      "accomplishmentDate": "2024-06-30",
+      "employeeComments": "Making good progress on the course modules. Completed 60% of the content.",
+      "managerComments": "Great initiative! Please share learnings with the team.",
+      "completionPercentage": 60,
+      "goalType": "Development",
+      "employeeId": "3",
+      "managerId": "2",
+      "status": "IN_PROGRESS",
+      "createdAt": "2024-01-15T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z"
+    },
+    {
+      "id": "goal-2",
+      "name": "Improve Team Collaboration",
+      "description": "Lead weekly team meetings and improve cross-functional communication",
+      "accomplishmentDate": "2024-12-31",
+      "employeeComments": "Started weekly meetings, team feedback has been positive",
+      "managerComments": "Excellent leadership skills demonstrated",
+      "completionPercentage": 75,
+      "goalType": "Team",
+      "employeeId": "3",
+      "managerId": "2",
+      "status": "IN_PROGRESS",
+      "createdAt": "2024-01-15T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z"
+    },
+    {
+      "id": "goal-3",
+      "name": "Increase Sales Revenue",
+      "description": "Achieve 20% increase in quarterly sales revenue through new client acquisition",
+      "accomplishmentDate": "2024-09-30",
+      "employeeComments": "Currently at 15% increase, working on 3 major prospects",
+      "managerComments": "On track to exceed target. Keep up the excellent work!",
+      "completionPercentage": 85,
+      "goalType": "Individual",
+      "employeeId": "5",
+      "managerId": "2",
+      "status": "IN_PROGRESS",
+      "createdAt": "2024-01-20T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z"
+    }
+  ],
+  "goals-groups": [
+    {
+      "id": "group-1",
+      "name": "Q2 2024 Performance Goals",
+      "description": "Performance goals for second quarter of 2024",
+      "goals": ["goal-1", "goal-2"],
+      "status": "IN_PROGRESS",
+      "createdAt": "2024-01-15T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z"
+    },
+    {
+      "id": "group-2",
+      "name": "Sales Targets Q3 2024",
+      "description": "Sales performance goals for third quarter",
+      "goals": ["goal-3"],
+      "status": "APPROVED",
+      "createdAt": "2024-01-20T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z"
+    }
+  ],
+  "leave-types": [
+    {
+      "id": "1",
+      "name": "Annual Leave",
+      "description": "Yearly vacation leave",
+      "defaultDays": 25,
+      "isActive": true,
+      "allowCarryForward": true,
+      "maxCarryForwardDays": 5,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Sick Leave",
+      "description": "Medical leave for illness",
+      "defaultDays": 10,
+      "isActive": true,
+      "allowCarryForward": false,
+      "maxCarryForwardDays": 0,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Maternity Leave",
+      "description": "Leave for new mothers",
+      "defaultDays": 90,
+      "isActive": true,
+      "allowCarryForward": false,
+      "maxCarryForwardDays": 0,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Personal Leave",
+      "description": "Personal time off",
+      "defaultDays": 5,
+      "isActive": true,
+      "allowCarryForward": true,
+      "maxCarryForwardDays": 2,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    }
+  ],
+  "leave-requests": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "leaveTypeId": "1",
+      "startDate": "2024-07-15",
+      "endDate": "2024-07-19",
+      "reason": "Family vacation to Europe",
+      "status": "APPROVED",
+      "isHalfDay": false,
+      "halfDayType": null,
+      "halfDayDate": null,
+      "totalDays": 5,
+      "appliedDate": "2024-06-01",
+      "approvedBy": "2",
+      "approvedDate": "2024-06-02",
+      "approverComments": "Enjoy your vacation!",
+      "emergencyContact": {
+        "name": "Sarah Johnson",
+        "phone": "+1-555-0789",
+        "relationship": "Sister"
+      },
+      "createdAt": "2024-06-01T08:00:00Z",
+      "updatedAt": "2024-06-02T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "leaveTypeId": "2",
+      "startDate": "2024-06-20",
+      "endDate": "2024-06-20",
+      "reason": "Doctor appointment for annual checkup",
+      "status": "PENDING",
+      "isHalfDay": true,
+      "halfDayType": "FIRST_HALF",
+      "halfDayDate": "2024-06-20",
+      "totalDays": 0.5,
+      "appliedDate": "2024-06-15",
+      "approvedBy": null,
+      "approvedDate": null,
+      "approverComments": null,
+      "emergencyContact": null,
+      "createdAt": "2024-06-15T08:00:00Z",
+      "updatedAt": "2024-06-15T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "employeeId": "2",
+      "leaveTypeId": "4",
+      "startDate": "2024-08-05",
+      "endDate": "2024-08-07",
+      "reason": "Personal matters - family event",
+      "status": "REJECTED",
+      "isHalfDay": false,
+      "halfDayType": null,
+      "halfDayDate": null,
+      "totalDays": 3,
+      "appliedDate": "2024-07-20",
+      "approvedBy": "1",
+      "approvedDate": "2024-07-22",
+      "approverComments": "Peak project period, cannot approve. Please reschedule.",
+      "emergencyContact": null,
+      "createdAt": "2024-07-20T08:00:00Z",
+      "updatedAt": "2024-07-22T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "employeeId": "1",
+      "leaveTypeId": "1",
+      "startDate": "2024-09-01",
+      "endDate": "2024-09-10",
+      "reason": "Annual vacation - mountain hiking trip",
+      "status": "APPROVED",
+      "isHalfDay": false,
+      "halfDayType": null,
+      "halfDayDate": null,
+      "totalDays": 8,
+      "appliedDate": "2024-06-10",
+      "approvedBy": "4",
+      "approvedDate": "2024-06-12",
+      "approverComments": "Approved. Well deserved break.",
+      "emergencyContact": {
+        "name": "Jane Doe",
+        "phone": "+1-555-0124",
+        "relationship": "Spouse"
+      },
+      "createdAt": "2024-06-10T08:00:00Z",
+      "updatedAt": "2024-06-12T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "employeeId": "4",
+      "leaveTypeId": "3",
+      "startDate": "2024-08-15",
+      "endDate": "2024-11-15",
+      "reason": "Maternity leave",
+      "status": "APPROVED",
+      "isHalfDay": false,
+      "halfDayType": null,
+      "halfDayDate": null,
+      "totalDays": 90,
+      "appliedDate": "2024-05-01",
+      "approvedBy": "4",
+      "approvedDate": "2024-05-02",
+      "approverComments": "Congratulations! All the best.",
+      "emergencyContact": {
+        "name": "Robert Wilson",
+        "phone": "+1-555-0999",
+        "relationship": "Spouse"
+      },
+      "createdAt": "2024-05-01T08:00:00Z",
+      "updatedAt": "2024-05-02T08:00:00Z"
+    }
+  ],
+  "attendance-records": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "date": "2024-06-14",
+      "clockIn": "09:00:00",
+      "clockOut": "17:30:00",
+      "status": "PRESENT",
+      "totalHours": 8.5,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-14T09:00:00Z",
+      "updatedAt": "2024-06-14T17:30:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "date": "2024-06-14",
+      "clockIn": "09:15:00",
+      "clockOut": "17:45:00",
+      "status": "LATE",
+      "totalHours": 8.5,
+      "lateMinutes": 15,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-14T09:15:00Z",
+      "updatedAt": "2024-06-14T17:45:00Z"
+    },
+    {
+      "id": "3",
+      "employeeId": "2",
+      "date": "2024-06-13",
+      "clockIn": "08:45:00",
+      "clockOut": "16:30:00",
+      "status": "PRESENT",
+      "totalHours": 7.75,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 30,
+      "createdAt": "2024-06-13T08:45:00Z",
+      "updatedAt": "2024-06-13T16:30:00Z"
+    },
+    {
+      "id": "4",
+      "employeeId": "4",
+      "date": "2024-06-12",
+      "clockIn": null,
+      "clockOut": null,
+      "status": "ON_LEAVE",
+      "totalHours": 0,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-12T08:00:00Z",
+      "updatedAt": "2024-06-12T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "employeeId": "1",
+      "date": "2024-06-14",
+      "clockIn": "08:55:00",
+      "clockOut": "17:00:00",
+      "status": "PRESENT",
+      "totalHours": 8.08,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-14T08:55:00Z",
+      "updatedAt": "2024-06-14T17:00:00Z"
+    },
+    {
+      "id": "6",
+      "employeeId": "3",
+      "date": "2024-06-13",
+      "clockIn": "09:20:00",
+      "clockOut": "17:30:00",
+      "status": "LATE",
+      "totalHours": 8.17,
+      "lateMinutes": 20,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-13T09:20:00Z",
+      "updatedAt": "2024-06-13T17:30:00Z"
+    },
+    {
+      "id": "7",
+      "employeeId": "5",
+      "date": "2024-06-13",
+      "clockIn": "09:00:00",
+      "clockOut": "16:45:00",
+      "status": "PRESENT",
+      "totalHours": 7.75,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 15,
+      "createdAt": "2024-06-13T09:00:00Z",
+      "updatedAt": "2024-06-13T16:45:00Z"
+    },
+    {
+      "id": "8",
+      "employeeId": "2",
+      "date": "2024-06-12",
+      "clockIn": null,
+      "clockOut": null,
+      "status": "ABSENT",
+      "totalHours": 0,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-12T08:00:00Z",
+      "updatedAt": "2024-06-12T08:00:00Z"
+    }
+  ],
+  "permissions": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "date": "2024-06-15",
+      "startTime": "14:00:00",
+      "endTime": "16:00:00",
+      "reason": "Medical appointment",
+      "status": "APPROVED",
+      "approvedBy": "2",
+      "approverComments": "Approved for medical reasons",
+      "createdAt": "2024-06-10T08:00:00Z",
+      "updatedAt": "2024-06-11T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "date": "2024-06-20",
+      "startTime": "10:00:00",
+      "endTime": "12:00:00",
+      "reason": "Bank work",
+      "status": "PENDING",
+      "approvedBy": null,
+      "approverComments": null,
+      "createdAt": "2024-06-18T08:00:00Z",
+      "updatedAt": "2024-06-18T08:00:00Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "1",
+      "title": "Senior React Developer",
+      "department": "Engineering",
+      "location": "Remote",
+      "type": "FULL_TIME",
+      "experience": "3-5 years",
+      "description": "We are looking for an experienced React developer to join our growing team.",
+      "requirements": [
+        "3+ years React experience",
+        "TypeScript proficiency",
+        "Redux/Context API knowledge",
+        "Testing frameworks (Jest, RTL)"
+      ],
+      "responsibilities": [
+        "Develop and maintain React applications",
+        "Collaborate with design and backend teams",
+        "Write clean, maintainable code",
+        "Participate in code reviews"
+      ],
+      "salary": {
+        "min": 80000,
+        "max": 120000,
+        "currency": "USD"
+      },
+      "benefits": [
+        "Health insurance",
+        "401k matching",
+        "Flexible working hours",
+        "Professional development budget"
+      ],
+      "status": "PUBLISHED",
+      "createdAt": "2024-05-01T08:00:00Z",
+      "updatedAt": "2024-05-01T08:00:00Z",
+      "closingDate": "2024-07-31",
+      "numberOfPositions": 2,
+      "applicationsCount": 15
+    },
+    {
+      "id": "2",
+      "title": "Marketing Manager",
+      "department": "Marketing",
+      "location": "New York, NY",
+      "type": "FULL_TIME",
+      "experience": "5+ years",
+      "description": "Lead our marketing initiatives and drive brand growth.",
+      "requirements": [
+        "5+ years marketing experience",
+        "Digital marketing expertise",
+        "Team leadership skills",
+        "Analytics and data-driven mindset"
+      ],
+      "responsibilities": [
+        "Develop marketing strategies",
+        "Manage marketing team",
+        "Oversee campaigns and budgets",
+        "Analyze market trends"
+      ],
+      "salary": {
+        "min": 90000,
+        "max": 130000,
+        "currency": "USD"
+      },
+      "benefits": [
+        "Health insurance",
+        "Stock options",
+        "Flexible PTO",
+        "Remote work options"
+      ],
+      "status": "PUBLISHED",
+      "createdAt": "2024-05-15T08:00:00Z",
+      "updatedAt": "2024-05-15T08:00:00Z",
+      "closingDate": "2024-08-15",
+      "numberOfPositions": 1,
+      "applicationsCount": 8
+    }
+  ],
+  "job-applications": [
+    {
+      "id": "1",
+      "jobId": "1",
+      "candidateId": "cand-1",
+      "status": "INTERVIEW",
+      "appliedAt": "2024-05-20T08:00:00Z",
+      "updatedAt": "2024-06-01T08:00:00Z",
+      "candidate": {
+        "id": "cand-1",
+        "name": "Alex Thompson",
+        "email": "alex.thompson@email.com",
+        "phone": "+1-555-0123",
+        "resumeUrl": "/resumes/alex-thompson.pdf",
+        "coverLetterUrl": "/cover-letters/alex-thompson.pdf"
+      },
+      "evaluations": [
+        {
+          "id": "eval-1",
+          "evaluatorId": "2",
+          "evaluatorName": "Jane Smith",
+          "score": 85,
+          "comments": "Strong technical skills, good communication",
+          "createdAt": "2024-05-25T08:00:00Z"
+        }
+      ],
+      "interviews": [
+        {
+          "id": "int-1",
+          "scheduledAt": "2024-06-20T14:00:00Z",
+          "interviewerId": "1",
+          "interviewerName": "John Doe",
+          "type": "VIDEO",
+          "status": "SCHEDULED",
+          "feedback": null,
+          "rating": null
+        }
+      ],
+      "timeline": [
+        {
+          "status": "NEW",
+          "timestamp": "2024-05-20T08:00:00Z",
+          "note": "Application received"
+        },
+        {
+          "status": "SCREENING",
+          "timestamp": "2024-05-22T08:00:00Z",
+          "note": "Initial screening completed"
+        },
+        {
+          "status": "INTERVIEW",
+          "timestamp": "2024-06-01T08:00:00Z",
+          "note": "Moved to interview stage"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "jobId": "2",
+      "candidateId": "cand-2",
+      "status": "OFFER",
+      "appliedAt": "2024-05-25T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z",
+      "candidate": {
+        "id": "cand-2",
+        "name": "Maria Garcia",
+        "email": "maria.garcia@email.com",
+        "phone": "+1-555-0456",
+        "resumeUrl": "/resumes/maria-garcia.pdf",
+        "coverLetterUrl": "/cover-letters/maria-garcia.pdf"
+      },
+      "evaluations": [
+        {
+          "id": "eval-2",
+          "evaluatorId": "4",
+          "evaluatorName": "Sarah Wilson",
+          "score": 92,
+          "comments": "Excellent marketing background and leadership experience",
+          "createdAt": "2024-06-05T08:00:00Z"
+        }
+      ],
+      "interviews": [
+        {
+          "id": "int-2",
+          "scheduledAt": "2024-06-08T10:00:00Z",
+          "interviewerId": "2",
+          "interviewerName": "Jane Smith",
+          "type": "IN_PERSON",
+          "status": "COMPLETED",
+          "feedback": "Outstanding candidate with great vision",
+          "rating": 9
+        }
+      ],
+      "timeline": [
+        {
+          "status": "NEW",
+          "timestamp": "2024-05-25T08:00:00Z",
+          "note": "Application received"
+        },
+        {
+          "status": "SCREENING",
+          "timestamp": "2024-05-28T08:00:00Z",
+          "note": "Screening passed"
+        },
+        {
+          "status": "INTERVIEW",
+          "timestamp": "2024-06-01T08:00:00Z",
+          "note": "Interview scheduled"
+        },
+        {
+          "status": "OFFER",
+          "timestamp": "2024-06-10T08:00:00Z",
+          "note": "Offer extended"
+        }
+      ]
+    }
+  ],
+  "dashboard-stats": [
+    {
+      "title": "Total Employees",
+      "value": "247",
+      "trend": "+12%",
+      "trendDirection": "up"
+    },
+    {
+      "title": "Active Goals",
+      "value": "89",
+      "trend": "+8%",
+      "trendDirection": "up"
+    },
+    {
+      "title": "Pending Leaves",
+      "value": "15",
+      "trend": "-5%",
+      "trendDirection": "down"
+    },
+    {
+      "title": "Open Positions",
+      "value": "8",
+      "trend": "+25%",
+      "trendDirection": "up"
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "title": "New employee onboarded",
+      "timestamp": "2024-06-14T09:30:00Z",
+      "icon": "user-plus",
+      "color": "green"
+    },
+    {
+      "id": 2,
+      "title": "Leave request approved",
+      "timestamp": "2024-06-14T08:15:00Z",
+      "icon": "calendar",
+      "color": "blue"
+    },
+    {
+      "id": 3,
+      "title": "Goal milestone achieved",
+      "timestamp": "2024-06-13T16:45:00Z",
+      "icon": "target",
+      "color": "purple"
+    },
+    {
+      "id": 4,
+      "title": "Interview scheduled",
+      "timestamp": "2024-06-13T14:20:00Z",
+      "icon": "briefcase",
+      "color": "orange"
+    },
+    {
+      "id": 5,
+      "title": "Performance review completed",
+      "timestamp": "2024-06-12T11:00:00Z",
+      "icon": "chart-bar",
+      "color": "indigo"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "role": "Software Engineer",
+      "date": "2024-06-20",
+      "status": "Interview Scheduled",
+      "statusColor": "blue"
+    },
+    {
+      "id": 2,
+      "name": "Maria Garcia",
+      "role": "Marketing Manager",
+      "date": "2024-06-18",
+      "status": "Offer Extended",
+      "statusColor": "green"
+    },
+    {
+      "id": 3,
+      "name": "Alex Thompson",
+      "role": "React Developer",
+      "date": "2024-06-22",
+      "status": "Final Interview",
+      "statusColor": "orange"
+    },
+    {
+      "id": 4,
+      "name": "Sarah Wilson",
+      "role": "HR Specialist",
+      "date": "2024-06-25",
+      "status": "Performance Review",
+      "statusColor": "purple"
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@company.com",
+      "departmentId": 1,
+      "position": "Senior Software Engineer",
+      "jobId": 1,
+      "employeeId": "EMP001",
+      "status": "ACTIVE",
+      "joinDate": "2023-01-15",
+      "createdAt": "2023-01-15T08:00:00Z",
+      "phoneNumber": "+1-555-0123",
+      "address": "123 Main St, New York, NY 10001",
+      "emergencyContact": {
+        "name": "Jane Doe",
+        "relationship": "Spouse",
+        "phoneNumber": "+1-555-0124"
+      },
+      "bankDetails": {
+        "accountName": "John Doe",
+        "accountNumber": "****1234",
+        "bankName": "Chase Bank",
+        "branchName": "Manhattan Branch"
+      },
+      "documents": [
+        {
+          "type": "Passport",
+          "number": "P123456789",
+          "expiryDate": "2029-01-15"
+        },
+        {
+          "type": "Driver License",
+          "number": "DL987654321",
+          "expiryDate": "2026-01-15"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@company.com",
+      "departmentId": 2,
+      "position": "Marketing Director",
+      "jobId": 2,
+      "employeeId": "EMP002",
+      "status": "ACTIVE",
+      "joinDate": "2022-03-20",
+      "createdAt": "2022-03-20T08:00:00Z",
+      "phoneNumber": "+1-555-0456",
+      "address": "456 Oak Ave, Los Angeles, CA 90210",
+      "emergencyContact": {
+        "name": "Robert Smith",
+        "relationship": "Brother",
+        "phoneNumber": "+1-555-0457"
+      },
+      "bankDetails": {
+        "accountName": "Jane Smith",
+        "accountNumber": "****5678",
+        "bankName": "Bank of America",
+        "branchName": "Beverly Hills Branch"
+      },
+      "documents": [
+        {
+          "type": "Passport",
+          "number": "P987654321",
+          "expiryDate": "2028-03-20"
+        }
+      ]
+    }
+  ],
+  "holiday-lists": [
+    {
+      "id": "1",
+      "name": "2024 Company Holidays",
+      "description": "Official company holidays for 2024",
+      "year": 2024,
+      "status": "PUBLISHED",
+      "createdAt": "2023-12-01T08:00:00Z",
+      "updatedAt": "2023-12-01T08:00:00Z"
+    }
+  ],
+  "holidays": [
+    {
+      "id": "1",
+      "listId": "1",
+      "name": "New Year's Day",
+      "date": "2024-01-01",
+      "type": "NATIONAL",
+      "isOptional": false,
+      "description": "Start of the new year",
+      "createdAt": "2023-12-01T08:00:00Z",
+      "updatedAt": "2023-12-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "listId": "1",
+      "name": "Independence Day",
+      "date": "2024-07-04",
+      "type": "NATIONAL",
+      "isOptional": false,
+      "description": "Independence Day celebration",
+      "createdAt": "2023-12-01T08:00:00Z",
+      "updatedAt": "2023-12-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "listId": "1",
+      "name": "Christmas Day",
+      "date": "2024-12-25",
+      "type": "NATIONAL",
+      "isOptional": false,
+      "description": "Christmas celebration",
+      "createdAt": "2023-12-01T08:00:00Z",
+      "updatedAt": "2023-12-01T08:00:00Z"
+    }
+  ],
+  "leave-balances": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "leaveTypeId": "1",
+      "totalDays": 25,
+      "usedDays": 8,
+      "remainingDays": 17,
+      "year": 2024
+    },
+    {
+      "id": "2",
+      "employeeId": "3",
+      "leaveTypeId": "2",
+      "totalDays": 10,
+      "usedDays": 2,
+      "remainingDays": 8,
+      "year": 2024
+    },
+    {
+      "id": "3",
+      "employeeId": "5",
+      "leaveTypeId": "1",
+      "totalDays": 25,
+      "usedDays": 12,
+      "remainingDays": 13,
+      "year": 2024
+    },
+    {
+      "id": "4",
+      "employeeId": "5",
+      "leaveTypeId": "4",
+      "totalDays": 5,
+      "usedDays": 1,
+      "remainingDays": 4,
+      "year": 2024
+    }
+  ],
+  "shifts": [
+    {
+      "id": "1",
+      "name": "Morning Shift",
+      "description": "Standard morning working hours for office staff",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00",
+      "breakDuration": 60,
+      "workingHours": 8,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "REGULAR",
+      "departmentIds": ["1", "2", "3"],
+      "allowedRoles": ["EMPLOYEE", "MANAGER", "ADMIN"],
+      "overtimeRules": {
+        "maxOvertimeHours": 4,
+        "overtimeRate": 1.5
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Evening Shift",
+      "description": "Evening working hours for customer support",
+      "startTime": "14:00:00",
+      "endTime": "22:00:00",
+      "breakDuration": 60,
+      "workingHours": 8,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "REGULAR",
+      "departmentIds": ["2", "3"],
+      "allowedRoles": ["EMPLOYEE", "MANAGER"],
+      "overtimeRules": {
+        "maxOvertimeHours": 2,
+        "overtimeRate": 1.5
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Night Shift",
+      "description": "Night working hours for security and maintenance",
+      "startTime": "22:00:00",
+      "endTime": "06:00:00",
+      "breakDuration": 60,
+      "workingHours": 8,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "NIGHT",
+      "departmentIds": ["4"],
+      "allowedRoles": ["EMPLOYEE"],
+      "overtimeRules": {
+        "maxOvertimeHours": 2,
+        "overtimeRate": 2.0
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Flexible Hours",
+      "description": "Flexible working hours for senior staff",
+      "startTime": "08:00:00",
+      "endTime": "18:00:00",
+      "breakDuration": 60,
+      "workingHours": 8,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "FLEXIBLE",
+      "departmentIds": ["1", "2"],
+      "allowedRoles": ["MANAGER", "ADMIN"],
+      "overtimeRules": {
+        "maxOvertimeHours": 6,
+        "overtimeRate": 1.5
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Part-time Morning",
+      "description": "Part-time morning shift",
+      "startTime": "09:00:00",
+      "endTime": "13:00:00",
+      "breakDuration": 30,
+      "workingHours": 4,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "PART_TIME",
+      "departmentIds": ["2", "3"],
+      "allowedRoles": ["EMPLOYEE"],
+      "overtimeRules": {
+        "maxOvertimeHours": 2,
+        "overtimeRate": 1.5
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Weekend Shift",
+      "description": "Weekend coverage shift",
+      "startTime": "10:00:00",
+      "endTime": "18:00:00",
+      "breakDuration": 60,
+      "workingHours": 8,
+      "timezone": "America/New_York",
+      "isActive": true,
+      "shiftType": "WEEKEND",
+      "departmentIds": ["2", "4"],
+      "allowedRoles": ["EMPLOYEE", "MANAGER"],
+      "overtimeRules": {
+        "maxOvertimeHours": 4,
+        "overtimeRate": 2.0
+      },
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    }
+  ],
+  "employee-shifts": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "shiftId": "1",
+      "effectiveDate": "2024-01-01",
+      "endDate": null,
+      "status": "ACTIVE",
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "shiftId": "1",
+      "effectiveDate": "2024-01-01",
+      "endDate": null,
+      "status": "ACTIVE",
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "employeeId": "2",
+      "shiftId": "2",
+      "effectiveDate": "2024-03-01",
+      "endDate": null,
+      "status": "ACTIVE",
+      "createdAt": "2024-03-01T08:00:00Z",
+      "updatedAt": "2024-03-01T08:00:00Z"
+    }
+  ],
+  "transfers": [
+    {
+      "id": "1",
+      "employeeId": "5",
+      "employeeName": "David Brown",
+      "transferType": "DEPARTMENT",
+      "currentDepartmentId": "2",
+      "currentDepartmentName": "Marketing",
+      "currentPosition": "Marketing Specialist",
+      "currentManager": "Jane Smith",
+      "newDepartmentId": "1",
+      "newDepartmentName": "Engineering",
+      "newPosition": "Junior Developer",
+      "newManager": "John Doe",
+      "requestedBy": "5",
+      "requestedDate": "2024-08-01",
+      "effectiveDate": "2024-08-15",
+      "reason": "Career growth opportunity - want to transition to technical role",
+      "status": "PENDING",
+      "comments": "Employee has been learning programming in spare time",
+      "attachments": [
+        {
+          "id": "1",
+          "name": "Programming_Certificates.pdf",
+          "url": "/attachments/transfer-1-certs.pdf"
+        }
+      ],
+      "approvals": [
+        {
+          "id": "1",
+          "approverId": "2",
+          "approverRole": "CURRENT_MANAGER",
+          "status": "APPROVED",
+          "comments": "Good employee, will be missed. Supports career growth.",
+          "approvedAt": "2024-06-05T08:00:00Z"
+        },
+        {
+          "id": "2",
+          "approverId": "1",
+          "approverRole": "TARGET_MANAGER",
+          "status": "PENDING",
+          "comments": null,
+          "approvedAt": null
+        },
+        {
+          "id": "3",
+          "approverId": "4",
+          "approverRole": "HR",
+          "status": "PENDING",
+          "comments": null,
+          "approvedAt": null
+        }
+      ],
+      "createdAt": "2024-06-01T08:00:00Z",
+      "updatedAt": "2024-06-05T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "3",
+      "employeeName": "Mike Johnson",
+      "transferType": "PROMOTION",
+      "currentDepartmentId": "1",
+      "currentDepartmentName": "Engineering",
+      "currentPosition": "Software Engineer",
+      "currentManager": "John Doe",
+      "newDepartmentId": "1",
+      "newDepartmentName": "Engineering",
+      "newPosition": "Senior Software Engineer",
+      "newManager": "John Doe",
+      "requestedBy": "1",
+      "requestedDate": "2024-07-01",
+      "effectiveDate": "2024-07-15",
+      "reason": "Promotion based on excellent performance review",
+      "status": "APPROVED",
+      "comments": "Well deserved promotion",
+      "attachments": [],
+      "approvals": [
+        {
+          "id": "4",
+          "approverId": "1",
+          "approverRole": "MANAGER",
+          "status": "APPROVED",
+          "comments": "Excellent performer, ready for senior role",
+          "approvedAt": "2024-06-20T08:00:00Z"
+        },
+        {
+          "id": "5",
+          "approverId": "4",
+          "approverRole": "HR",
+          "status": "APPROVED",
+          "comments": "Approved. Update salary and benefits accordingly.",
+          "approvedAt": "2024-06-22T08:00:00Z"
+        }
+      ],
+      "createdAt": "2024-06-15T08:00:00Z",
+      "updatedAt": "2024-06-22T08:00:00Z"
+    }
+  ],
+  "regularizations": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "date": "2024-06-10",
+      "type": "CLOCK_IN",
+      "requestedClockIn": "09:30:00",
+      "reason": "Traffic jam due to heavy rain",
+      "status": "APPROVED",
+      "approvedBy": "2",
+      "approverComments": "Valid reason, approved",
+      "createdAt": "2024-06-10T10:00:00Z",
+      "updatedAt": "2024-06-11T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "date": "2024-06-12",
+      "type": "BOTH",
+      "requestedClockIn": "09:15:00",
+      "requestedClockOut": "17:15:00",
+      "reason": "Doctor appointment, had to leave early",
+      "status": "PENDING",
+      "createdAt": "2024-06-13T08:00:00Z",
+      "updatedAt": "2024-06-13T08:00:00Z"
+    }
+  ],
+  "attendance-settings": [
+    {
+      "id": "1",
+      "workingHours": {
+        "startTime": "09:00:00",
+        "endTime": "17:00:00"
+      },
+      "lateThreshold": 15,
+      "earlyExitThreshold": 30,
+      "permissionLimit": 4,
+      "permissionMaxDuration": 240,
+      "gracePeriod": 10,
+      "weeklyOffDays": [0, 6],
+      "departmentSpecificRules": {
+        "1": {
+          "startTime": "09:00:00",
+          "endTime": "17:30:00"
+        },
+        "2": {
+          "startTime": "10:00:00",
+          "endTime": "18:00:00"
+        }
+      }
+    }
+  ],
+  "applications": [
+    {
+      "id": "1",
+      "jobId": "1",
+      "candidateId": "cand-1",
+      "status": "INTERVIEW",
+      "appliedAt": "2024-05-20T08:00:00Z",
+      "updatedAt": "2024-06-01T08:00:00Z",
+      "candidate": {
+        "id": "cand-1",
+        "name": "Alex Thompson",
+        "email": "alex.thompson@email.com",
+        "phone": "+1-555-0123",
+        "resumeUrl": "/resumes/alex-thompson.pdf",
+        "coverLetterUrl": "/cover-letters/alex-thompson.pdf"
+      },
+      "evaluations": [
+        {
+          "id": "eval-1",
+          "evaluatorId": "2",
+          "evaluatorName": "Jane Smith",
+          "score": 85,
+          "comments": "Strong technical skills, good communication",
+          "createdAt": "2024-05-25T08:00:00Z"
+        }
+      ],
+      "interviews": [
+        {
+          "id": "int-1",
+          "scheduledAt": "2024-06-20T14:00:00Z",
+          "interviewerId": "1",
+          "interviewerName": "John Doe",
+          "type": "VIDEO",
+          "status": "SCHEDULED",
+          "feedback": null,
+          "rating": null
+        }
+      ],
+      "timeline": [
+        {
+          "status": "NEW",
+          "timestamp": "2024-05-20T08:00:00Z",
+          "note": "Application received"
+        },
+        {
+          "status": "SCREENING",
+          "timestamp": "2024-05-22T08:00:00Z",
+          "note": "Initial screening completed"
+        },
+        {
+          "status": "INTERVIEW",
+          "timestamp": "2024-06-01T08:00:00Z",
+          "note": "Moved to interview stage"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "jobId": "2",
+      "candidateId": "cand-2",
+      "status": "OFFER",
+      "appliedAt": "2024-05-25T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z",
+      "candidate": {
+        "id": "cand-2",
+        "name": "Maria Garcia",
+        "email": "maria.garcia@email.com",
+        "phone": "+1-555-0456",
+        "resumeUrl": "/resumes/maria-garcia.pdf",
+        "coverLetterUrl": "/cover-letters/maria-garcia.pdf"
+      },
+      "evaluations": [
+        {
+          "id": "eval-2",
+          "evaluatorId": "4",
+          "evaluatorName": "Sarah Wilson",
+          "score": 92,
+          "comments": "Excellent marketing background and leadership experience",
+          "createdAt": "2024-06-05T08:00:00Z"
+        }
+      ],
+      "interviews": [
+        {
+          "id": "int-2",
+          "scheduledAt": "2024-06-08T10:00:00Z",
+          "interviewerId": "2",
+          "interviewerName": "Jane Smith",
+          "type": "IN_PERSON",
+          "status": "COMPLETED",
+          "feedback": "Outstanding candidate with great vision",
+          "rating": 9
+        }
+      ],
+      "timeline": [
+        {
+          "status": "NEW",
+          "timestamp": "2024-05-25T08:00:00Z",
+          "note": "Application received"
+        },
+        {
+          "status": "SCREENING",
+          "timestamp": "2024-05-28T08:00:00Z",
+          "note": "Screening passed"
+        },
+        {
+          "status": "INTERVIEW",
+          "timestamp": "2024-06-01T08:00:00Z",
+          "note": "Interview scheduled"
+        },
+        {
+          "status": "OFFER",
+          "timestamp": "2024-06-10T08:00:00Z",
+          "note": "Offer extended"
+        }
+      ]
+    }
+  ],
+  "performance-reviews": [
+    {
+      "id": "1",
+      "employeeId": "3",
+      "reviewerId": "2",
+      "reviewPeriod": {
+        "startDate": "2024-01-01",
+        "endDate": "2024-06-30"
+      },
+      "status": "COMPLETED",
+      "overallRating": 4.2,
+      "goals": [
+        {
+          "goalId": "goal-1",
+          "rating": 4,
+          "comments": "Excellent progress on React training"
+        },
+        {
+          "goalId": "goal-2",
+          "rating": 5,
+          "comments": "Outstanding leadership in team meetings"
+        }
+      ],
+      "competencies": [
+        {
+          "name": "Technical Skills",
+          "rating": 4,
+          "comments": "Strong technical abilities, keeps up with latest technologies"
+        },
+        {
+          "name": "Communication",
+          "rating": 5,
+          "comments": "Excellent communication skills, clear and concise"
+        },
+        {
+          "name": "Teamwork",
+          "rating": 4,
+          "comments": "Great team player, helps colleagues"
+        }
+      ],
+      "achievements": [
+        "Led successful migration to React 18",
+        "Mentored 2 junior developers",
+        "Improved team productivity by 25%"
+      ],
+      "areasForImprovement": [
+        "Time management during peak periods",
+        "Documentation practices"
+      ],
+      "developmentPlan": [
+        "Attend project management training",
+        "Complete advanced React certification",
+        "Shadow senior architect for 2 months"
+      ],
+      "employeeComments": "I'm grateful for the feedback and excited about the development opportunities.",
+      "reviewerComments": "Mike has shown exceptional growth this period. Recommend for promotion consideration.",
+      "hrComments": "Strong performer, align with career development plan.",
+      "createdAt": "2024-06-01T08:00:00Z",
+      "updatedAt": "2024-06-15T08:00:00Z",
+      "completedAt": "2024-06-15T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "employeeId": "5",
+      "reviewerId": "2",
+      "reviewPeriod": {
+        "startDate": "2024-01-01",
+        "endDate": "2024-06-30"
+      },
+      "status": "IN_PROGRESS",
+      "overallRating": null,
+      "goals": [
+        {
+          "goalId": "goal-3",
+          "rating": null,
+          "comments": ""
+        }
+      ],
+      "competencies": [],
+      "achievements": [],
+      "areasForImprovement": [],
+      "developmentPlan": [],
+      "employeeComments": "",
+      "reviewerComments": "",
+      "hrComments": "",
+      "createdAt": "2024-06-10T08:00:00Z",
+      "updatedAt": "2024-06-10T08:00:00Z",
+      "completedAt": null
+    }
+  ]
+}
