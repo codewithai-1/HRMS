@@ -14,6 +14,11 @@ export interface RouteConfig {
   };
 }
 
+interface MenuGroup {
+  label: string;
+  items: string[];
+}
+
 const routes: Record<string, RouteConfig> = {
   dashboard: {
     id: 'dashboard',
@@ -194,6 +199,19 @@ const routes: Record<string, RouteConfig> = {
       edit: [UserRole.ADMIN, UserRole.MANAGER, UserRole.EMPLOYEE],
       delete: [UserRole.ADMIN, UserRole.MANAGER]
     }
+  },
+  recognition: {
+    id: 'recognition',
+    path: '/recognition',
+    name: 'Employee Recognition',
+    description: 'Nominate and recognize outstanding employees',
+    icon: 'TrophyIcon',
+    permissions: {
+      view: [UserRole.ADMIN, UserRole.MANAGER, UserRole.HR, UserRole.EMPLOYEE],
+      create: [UserRole.ADMIN, UserRole.MANAGER, UserRole.HR, UserRole.EMPLOYEE],
+      edit: [UserRole.ADMIN, UserRole.MANAGER, UserRole.HR],
+      delete: [UserRole.ADMIN]
+    }
   }
 };
 
@@ -201,9 +219,37 @@ const routes: Record<string, RouteConfig> = {
 export const getRouteConfig = (id: string): RouteConfig | undefined => routes[id];
 export const getAllRoutes = (): RouteConfig[] => Object.values(routes);
 export const getAuthorizedRoutes = (userRole: UserRole): RouteConfig[] => {
-  return Object.values(routes).filter(route => 
-    route.permissions?.view?.includes(userRole)
-  );
+  console.log('Getting authorized routes for role:', userRole);
+  const authorizedRoutes = Object.values(routes).filter(route => {
+    const hasPermission = route.permissions?.view?.includes(userRole);
+    console.log(`Route ${route.id}: ${hasPermission ? 'authorized' : 'not authorized'}`);
+    return hasPermission;
+  });
+  console.log('Authorized routes:', authorizedRoutes);
+  return authorizedRoutes;
+};
+
+const menuGroups: Record<string, MenuGroup> = {
+  main: {
+    label: 'Main',
+    items: ['dashboard']
+  },
+  management: {
+    label: 'Management',
+    items: ['employees', 'departments', 'roles', 'transfers', 'shifts']
+  },
+  operations: {
+    label: 'Operations',
+    items: ['recruitment', 'attendance', 'leave', 'holidays', 'goals', 'recognition']
+  },
+  finance: {
+    label: 'Finance & Reports',
+    items: ['payroll', 'reports']
+  },
+  system: {
+    label: 'System',
+    items: ['settings']
+  }
 };
 
 export default routes; 

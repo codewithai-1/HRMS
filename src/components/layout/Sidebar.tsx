@@ -15,7 +15,8 @@ import {
   ArrowsRightLeftIcon,
   GlobeAltIcon,
   ClipboardDocumentCheckIcon,
-  StarIcon
+  StarIcon,
+  TrophyIcon
 } from '@heroicons/react/24/outline';
 import './Sidebar.css';
 import { getAuthorizedRoutes, RouteConfig } from '../../config/routes';
@@ -56,7 +57,7 @@ const menuGroups: Record<string, MenuGroup> = {
   },
   operations: {
     label: 'Operations',
-    items: ['recruitment', 'attendance', 'leave', 'holidays', 'goals']
+    items: ['recruitment', 'attendance', 'leave', 'holidays', 'goals', 'recognition']
   },
   finance: {
     label: 'Finance & Reports',
@@ -83,12 +84,16 @@ const Sidebar = ({ isOpen, isMobile, closeSidebar }: SidebarProps) => {
   const location = useLocation();
   const authorizedRoutes = user ? getAuthorizedRoutes(user.role) : [];
   
+  console.log('Authorized routes:', authorizedRoutes);
+  
   // Group the routes
   const groupedRoutes: GroupedRoutes[] = Object.entries(menuGroups)
     .map(([groupKey, group]) => {
       const groupItems = authorizedRoutes.filter(route => 
         group.items.includes(route.id)
       );
+      
+      console.log(`Group ${groupKey} items:`, groupItems);
       
       return groupItems.length > 0 ? { 
         key: groupKey,
@@ -101,7 +106,7 @@ const Sidebar = ({ isOpen, isMobile, closeSidebar }: SidebarProps) => {
   // Initialize collapsed state based on current route
   const initialCollapsedState = groupedRoutes.reduce((acc, group) => {
     // Check if this group contains the current route
-    const isActiveGroup = group.items.some(route => location.pathname === route.path);
+    const isActiveGroup = group.items.some(route => location.pathname.startsWith(route.path));
     // Collapse all groups except the active one
     acc[group.key] = !isActiveGroup;
     return acc;
@@ -120,7 +125,7 @@ const Sidebar = ({ isOpen, isMobile, closeSidebar }: SidebarProps) => {
 
   // Check if a group contains the active route
   const isGroupActive = (groupItems: RouteConfig[]) => {
-    return groupItems.some(route => location.pathname === route.path);
+    return groupItems.some(route => location.pathname.startsWith(route.path));
   };
 
   // Map route IDs to icons with consistent sizing
@@ -138,7 +143,8 @@ const Sidebar = ({ isOpen, isMobile, closeSidebar }: SidebarProps) => {
     settings: <Cog6ToothIcon className="icon" />,
     transfers: <ArrowsRightLeftIcon className="icon" />,
     shifts: <ClipboardDocumentCheckIcon className="icon" />,
-    goals: <StarIcon className="icon" />
+    goals: <StarIcon className="icon" />,
+    recognition: <TrophyIcon className="icon" />
   };
 
   return (

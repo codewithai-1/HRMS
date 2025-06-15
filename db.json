@@ -1682,5 +1682,110 @@
       "updatedAt": "2024-06-10T08:00:00Z",
       "completedAt": null
     }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Star Performer",
+      "description": "Exceptional individual contributor who consistently exceeds expectations",
+      "criteria": [
+        "Consistently delivers high-quality work",
+        "Exceeds performance targets",
+        "Demonstrates exceptional problem-solving skills",
+        "Shows initiative and takes ownership"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Lead That Inspires",
+      "description": "Natural leader who motivates and guides team members",
+      "criteria": [
+        "Effectively guides and mentors team members",
+        "Creates a positive and productive work environment",
+        "Demonstrates strong leadership qualities",
+        "Inspires others to achieve their best"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Innovation Champion",
+      "description": "Employee who brings creative solutions and drives innovation",
+      "criteria": [
+        "Introduces new ideas and approaches",
+        "Improves processes and systems",
+        "Demonstrates creative thinking",
+        "Successfully implements innovative solutions"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Team Player Excellence",
+      "description": "Collaborative team member who enhances team dynamics",
+      "criteria": [
+        "Actively contributes to team success",
+        "Supports and helps colleagues",
+        "Maintains positive team relationships",
+        "Demonstrates strong collaboration skills"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Customer Hero",
+      "description": "Employee who delivers exceptional customer service",
+      "criteria": [
+        "Exceeds customer expectations",
+        "Resolves complex customer issues",
+        "Maintains high customer satisfaction",
+        "Demonstrates empathy and understanding"
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Growth Catalyst",
+      "description": "Employee who demonstrates continuous learning and helps others grow",
+      "criteria": [
+        "Shows commitment to personal development",
+        "Helps others learn and grow",
+        "Shares knowledge and expertise",
+        "Actively seeks learning opportunities"
+      ]
+    }
+  ],
+  "nominations": [
+    {
+      "id": "1",
+      "categoryId": "1",
+      "nomineeId": "1",
+      "nominatorId": "2",
+      "type": "peer",
+      "justification": "John has consistently delivered exceptional results in our project. His attention to detail and problem-solving skills have been instrumental in meeting our deadlines. He often goes above and beyond to ensure quality, and his work has significantly contributed to our team's success. His ability to handle complex challenges while maintaining high standards is truly remarkable.",
+      "supportingDocuments": ["project_report.pdf", "customer_feedback.pdf"],
+      "status": "approved",
+      "submittedAt": "2024-03-15T10:00:00Z",
+      "reviewedAt": "2024-03-16T14:30:00Z",
+      "reviewedBy": "3",
+      "managerComments": "Strong nomination with clear examples of exceptional performance."
+    },
+    {
+      "id": "2",
+      "categoryId": "3",
+      "nomineeId": "2",
+      "nominatorId": "2",
+      "type": "self",
+      "justification": "I have introduced several innovative solutions to improve our workflow efficiency. The new automation system I developed has reduced processing time by 40% and improved accuracy. I've also mentored team members on implementing these improvements, leading to broader organizational impact.",
+      "supportingDocuments": ["innovation_proposal.pdf", "implementation_plan.pdf"],
+      "status": "under_review",
+      "submittedAt": "2024-03-17T09:15:00Z"
+    }
+  ],
+  "winners": [
+    {
+      "id": "1",
+      "nominationId": "1",
+      "categoryId": "1",
+      "employeeId": "1",
+      "period": "Q1 2024",
+      "announcedAt": "2024-03-20T15:00:00Z"
+    }
   ]
 }

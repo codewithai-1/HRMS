@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import useAuth, { AuthProvider } from './hooks/useAuth.tsx';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -62,110 +62,156 @@ import GoalsSetting from './pages/goals/GoalsSetting';
 import GoalsReview from './pages/goals/GoalsReview';
 import GoalsView from './pages/goals/GoalsView';
 
+// Recognition Management
+import RecognitionDashboard from './pages/recognition/RecognitionDashboard';
+import NominationForm from './pages/recognition/NominationForm';
+import WinnersGallery from './pages/recognition/WinnersGallery';
+import MyNominations from './pages/recognition/MyNominations';
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-red-600 mb-4">Something went wrong</h1>
+            <p className="text-slate-600 dark:text-slate-400 mb-4">{this.state.error?.message}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="btn btn-primary"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// Loading Component
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+  </div>
+);
+
 const App = () => {
+  console.log('App component rendering');
+  
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          {/* Redirect root to dashboard if authenticated, otherwise to login */}
-          <Route path="/" element={<Navigate to={routes.dashboard.path} replace />} />
-          
-          {/* Auth routes */}
-          <Route path="/auth/login" element={
-            <AuthLayout>
-              <Login />
-            </AuthLayout>
-          } />
-          
-          {/* Protected routes wrapped in MainLayout */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <MainLayout />
-              </ProtectedRoute>
-            }
-          >
-            {/* Dashboard */}
-            <Route path={routes.dashboard.path} element={<Dashboard />} />
-            
-            {/* Role Management */}
-            <Route path={routes.roles.path} element={<RolesManagement />} />
+    <ErrorBoundary>
+      <Router>
+        <Suspense fallback={<LoadingFallback />}>
+          <AuthProvider>
+            <Routes>
+              {/* Auth routes */}
+              <Route path="/auth/login" element={
+                <AuthLayout>
+                  <Login />
+                </AuthLayout>
+              } />
+              
+              {/* Redirect root to login if not authenticated */}
+              <Route path="/" element={<Navigate to="/auth/login" replace />} />
 
-            {/* Department Management */}
-            <Route path={routes.departments.path} element={<DepartmentsManagement />} />
+              {/* Dashboard only */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <Dashboard />
+                    </MainLayout>
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Employee Management */}
-            <Route path={routes.employees.path} element={<EmployeesManagement />} />
-            <Route path="/employees/new" element={<EmployeeForm />} />
-            <Route path="/employees/:id/edit" element={<EmployeeForm />} />
+              {/* All other modules at root level, wrapped in ProtectedRoute and MainLayout */}
+              <Route path="/roles" element={<ProtectedRoute><MainLayout><RolesManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/departments" element={<ProtectedRoute><MainLayout><DepartmentsManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/employees" element={<ProtectedRoute><MainLayout><EmployeesManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/employees/new" element={<ProtectedRoute><MainLayout><EmployeeForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/employees/:id/edit" element={<ProtectedRoute><MainLayout><EmployeeForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/transfers" element={<ProtectedRoute><MainLayout><TransfersManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/transfers/new" element={<ProtectedRoute><MainLayout><TransferForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/transfers/:id" element={<ProtectedRoute><MainLayout><TransferForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/shifts" element={<ProtectedRoute><MainLayout><ShiftsManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/shifts/new" element={<ProtectedRoute><MainLayout><ShiftForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/shifts/:id" element={<ProtectedRoute><MainLayout><ShiftForm /></MainLayout></ProtectedRoute>} />
+              <Route path="/recruitment" element={<ProtectedRoute><MainLayout><RecruitmentPage /></MainLayout></ProtectedRoute>} />
+              <Route path="/recruitment/jobs/new" element={<ProtectedRoute><MainLayout><NewJobPosting /></MainLayout></ProtectedRoute>} />
+              <Route path="/recruitment/jobs/:id" element={<ProtectedRoute><MainLayout><JobDetails /></MainLayout></ProtectedRoute>} />
+              <Route path="/recruitment/jobs/:id/applications" element={<ProtectedRoute><MainLayout><JobApplications /></MainLayout></ProtectedRoute>} />
+              <Route path="/recruitment/jobs/:jobId/applications/:applicationId" element={<ProtectedRoute><MainLayout><ApplicationDetails /></MainLayout></ProtectedRoute>} />
+              <Route path="/leave" element={<ProtectedRoute><MainLayout><LeaveManagement /></MainLayout></ProtectedRoute>} >
+                <Route index element={<LeaveRequestList />} />
+                <Route path="calendar" element={<LeaveCalendar />} />
+                <Route path="types" element={<LeaveTypeManagement />} />
+                <Route path="statistics" element={<LeaveStatistics />} />
+              </Route>
+              <Route path="/leave/apply" element={<ProtectedRoute><MainLayout><ApplyLeave /></MainLayout></ProtectedRoute>} />
+              <Route path="/leave/edit/:id" element={<ProtectedRoute><MainLayout><ApplyLeave /></MainLayout></ProtectedRoute>} />
+              <Route path="/holidays" element={<ProtectedRoute><MainLayout><HolidayManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/attendance" element={<ProtectedRoute><MainLayout><AttendancePage /></MainLayout></ProtectedRoute>} />
+              <Route path="/attendance/permission" element={<ProtectedRoute><MainLayout><PermissionPage /></MainLayout></ProtectedRoute>} />
+              <Route path="/attendance/regularization" element={<ProtectedRoute><MainLayout><RegularizationPage /></MainLayout></ProtectedRoute>} />
+              <Route path="/attendance/reports" element={<ProtectedRoute><MainLayout><AttendanceReports /></MainLayout></ProtectedRoute>} />
+              <Route path="/attendance/settings" element={<ProtectedRoute><MainLayout><AttendanceSettings /></MainLayout></ProtectedRoute>} />
+              <Route path="/goals" element={<ProtectedRoute><MainLayout><GoalsList /></MainLayout></ProtectedRoute>} />
+              <Route path="/goals/new" element={<ProtectedRoute><MainLayout><GoalsSetting /></MainLayout></ProtectedRoute>} />
+              <Route path="/goals/edit/:id" element={<ProtectedRoute><MainLayout><GoalsSetting /></MainLayout></ProtectedRoute>} />
+              <Route path="/goals/review/:id" element={<ProtectedRoute><MainLayout><GoalsReview /></MainLayout></ProtectedRoute>} />
+              <Route path="/goals/view/:id" element={<ProtectedRoute><MainLayout><GoalsView /></MainLayout></ProtectedRoute>} />
+              <Route path="/recognition" element={<ProtectedRoute><MainLayout><RecognitionDashboard /></MainLayout></ProtectedRoute>} >
+                <Route index element={<RecognitionDashboard />} />
+                <Route path="nominate" element={<NominationForm />} />
+                <Route path="winners" element={<WinnersGallery />} />
+                <Route path="my-nominations" element={<MyNominations />} />
+              </Route>
 
-            {/* Transfer Management */}
-            <Route path="/transfers" element={<TransfersManagement />} />
-            <Route path="/transfers/new" element={<TransferForm />} />
-            <Route path="/transfers/:id" element={<TransferForm />} />
-
-            {/* Shift Management */}
-            <Route path={routes.shifts.path} element={<ShiftsManagement />} />
-            <Route path="/shifts/new" element={<ShiftForm />} />
-            <Route path="/shifts/:id" element={<ShiftForm />} />
-
-            {/* Recruitment */}
-            <Route path={routes.recruitment.path} element={<RecruitmentPage />} />
-            <Route path="/recruitment/jobs/new" element={<NewJobPosting />} />
-            <Route path="/recruitment/jobs/:id" element={<JobDetails />} />
-            <Route path="/recruitment/jobs/:id/applications" element={<JobApplications />} />
-            <Route path="/recruitment/jobs/:jobId/applications/:applicationId" element={<ApplicationDetails />} />
-
-            {/* Leave Management */}
-            <Route path={routes.leave.path} element={<LeaveManagement />}>
-              <Route index element={<LeaveRequestList />} />
-              <Route path="calendar" element={<LeaveCalendar />} />
-              <Route path="types" element={<LeaveTypeManagement />} />
-              <Route path="statistics" element={<LeaveStatistics />} />
-            </Route>
-            <Route path="/leave/apply" element={<ApplyLeave />} />
-            <Route path="/leave/edit/:id" element={<ApplyLeave />} />
-
-            {/* Holiday Management */}
-            <Route path={routes.holidays.path} element={<HolidayManagement />} />
-
-            {/* Attendance Management */}
-            <Route path={routes.attendance.path} element={<AttendancePage />} />
-            <Route path="/attendance/permission" element={<PermissionPage />} />
-            <Route path="/attendance/regularization" element={<RegularizationPage />} />
-            <Route path="/attendance/reports" element={<AttendanceReports />} />
-            <Route path="/attendance/settings" element={<AttendanceSettings />} />
-
-            {/* Goals Management */}
-            <Route path="/goals" element={<GoalsList />} />
-            <Route path="/goals/new" element={<GoalsSetting />} />
-            <Route path="/goals/edit/:id" element={<GoalsSetting />} />
-            <Route path="/goals/review/:id" element={<GoalsReview />} />
-            <Route path="/goals/view/:id" element={<GoalsView />} />
-          </Route>
-          
-          {/* 404 route */}
-          <Route 
-            path="*" 
-            element={
-              <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
-                <div className="text-center">
-                  <h1 className="text-6xl font-bold text-slate-900 dark:text-white">404</h1>
-                  <p className="text-xl mt-4 text-slate-600 dark:text-slate-400">Page not found</p>
-                  <button 
-                    onClick={() => window.history.back()}
-                    className="mt-6 btn btn-primary"
-                  >
-                    Go Back
-                  </button>
-                </div>
-              </div>
-            } 
-          />
-        </Routes>
-      </AuthProvider>
-    </Router>
+              {/* 404 route */}
+              <Route 
+                path="*" 
+                element={
+                  <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+                    <div className="text-center">
+                      <h1 className="text-6xl font-bold text-slate-900 dark:text-white">404</h1>
+                      <p className="text-xl mt-4 text-slate-600 dark:text-slate-400">Page not found</p>
+                      <button 
+                        onClick={() => window.history.back()}
+                        className="mt-6 btn btn-primary"
+                      >
+                        Go Back
+                      </button>
+                    </div>
+                  </div>
+                } 
+              />
+            </Routes>
+          </AuthProvider>
+        </Suspense>
+      </Router>
+    </ErrorBoundary>
   );
 };
 

@@ -1,10 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { ReactNode } from 'react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
-const MainLayout = () => {
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <DashboardLayout>
-      <Outlet />
+      {children}
     </DashboardLayout>
   );
 };

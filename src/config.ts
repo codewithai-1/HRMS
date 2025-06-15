@@ -37,6 +37,31 @@ const config = {
     dashboard: '/dashboard',
     // Role Management route
     roles: '/roles',
+    // Department Management route
+    departments: '/departments',
+    // Employee Management route
+    employees: '/employees',
+    // Transfer Management route
+    transfers: '/transfers',
+    // Shift Management route
+    shifts: '/shifts',
+    // Recruitment route
+    recruitment: '/recruitment',
+    // Leave Management route
+    leave: '/leave',
+    // Holiday Management route
+    holidays: '/holidays',
+    // Attendance Management route
+    attendance: '/attendance',
+    // Goals Management route
+    goals: '/goals',
+    // Recognition routes
+    recognition: {
+      dashboard: '/recognition',
+      nominate: '/recognition/nominate',
+      winners: '/recognition/winners',
+      myNominations: '/recognition/my-nominations',
+    },
   },
 };
 

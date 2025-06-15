@@ -50,6 +50,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider component that wraps the app and makes auth available
 export function AuthProvider({ children }: { children: ReactNode }) {
+  console.log('AuthProvider rendering');
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,29 +61,54 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Check if user is already logged in on initial load
   useEffect(() => {
+    console.log('AuthProvider useEffect running');
+    let mounted = true;
+
     const checkAuth = async () => {
       try {
         const token = getToken();
+        console.log('Token found:', !!token);
         
+        if (!mounted) return;
+
         if (token) {
-          setUser({
+          // TODO: Replace with actual API call to validate token and get user data
+          const mockUser = {
             id: '1',
             name: 'John Doe',
-            email: 'john.doe@example.com',
-            role: UserRole.ADMIN
-          });
+            email: 'john.doe@company.com',
+            role: UserRole.ADMIN // Always set as ADMIN for testing
+          };
+          console.log('Setting user:', mockUser);
+          setUser(mockUser);
+        } else {
+          console.log('No token found, redirecting to login');
+          if (mounted) {
+            navigate(config.routes.auth.login);
+          }
         }
       } catch (err) {
         console.error('Authentication check failed:', err);
+        if (!mounted) return;
+        
         removeToken();
         setError('Authentication failed. Please log in again.');
+        if (mounted) {
+          navigate(config.routes.auth.login);
+        }
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     checkAuth();
-  }, []);
+
+    return () => {
+      mounted = false;
+    };
+  }, [navigate]);
 
   // Login function
   const login = async (credentials: LoginRequest) => {
@@ -90,16 +116,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     clearError();
     
     try {
+      // TODO: Replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       const token = 'mock-auth-token';
       saveToken(token, credentials.rememberMe || false);
       
-      setUser({
+      // Set admin user for john.doe@company.com
+      const mockUser = {
         id: '1',
         name: 'John Doe',
         email: credentials.email,
-        role: UserRole.ADMIN
-      });
+        role: credentials.email === 'john.doe@company.com' ? UserRole.ADMIN : UserRole.EMPLOYEE
+      };
+      console.log('Setting user:', mockUser);
+      setUser(mockUser);
       
       navigate(config.routes.dashboard);
     } catch (err) {
@@ -116,10 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     removeToken();
     setUser(null);
-    navigate('/login');
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    navigate(config.routes.auth.login);
   };
 
   // Register function
@@ -255,6 +282,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     socialLogin,
     clearError
   };
+
+  console.log('AuthProvider state:', { user, isLoading, error });
 
   return (
     <AuthContext.Provider value={authValue}>
