@@ -32,7 +32,7 @@ const RecognitionDashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Check if we're on a nested route
-  const isNestedRoute = location.pathname !== '/dashboard/recognition';
+  const isNestedRoute = location.pathname !== '/recognition';
 
   useEffect(() => {
     if (user && !isNestedRoute) {
@@ -110,7 +110,7 @@ const RecognitionDashboard: React.FC = () => {
         <h1>Employee Recognition</h1>
         <button
           className="btn btn-primary"
-          onClick={() => navigate('/dashboard/recognition/nominate')}
+          onClick={() => navigate('/recognition/nominate')}
         >
           <PlusIcon className="w-5 h-5 mr-2" />
           New Nomination
@@ -154,7 +154,7 @@ const RecognitionDashboard: React.FC = () => {
             <h2>Recent Winners</h2>
             <button
               className="btn btn-text"
-              onClick={() => navigate('/dashboard/recognition/winners')}
+              onClick={() => navigate('/recognition/winners')}
             >
               View All
             </button>
@@ -177,7 +177,7 @@ const RecognitionDashboard: React.FC = () => {
             <h2>My Nominations</h2>
             <button
               className="btn btn-text"
-              onClick={() => navigate('/dashboard/recognition/my-nominations')}
+              onClick={() => navigate('/recognition/my-nominations')}
             >
               View All
             </button>
