@@ -1787,5 +1787,231 @@
       "period": "Q1 2024",
       "announcedAt": "2024-03-20T15:00:00Z"
     }
-  ]
+  ],
+  "email-smtp": {
+    "id": "1",
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "secure": true,
+    "auth": {
+      "user": "hr@company.com",
+      "pass": "encrypted_password_here"
+    },
+    "defaults": {
+      "from": "HR System <hr@company.com>",
+      "replyTo": "hr-support@company.com"
+    },
+    "rateLimits": {
+      "maxEmailsPerHour": 100,
+      "maxEmailsPerDay": 1000,
+      "cooldownPeriod": 3600
+    },
+    "retryConfig": {
+      "maxRetries": 3,
+      "retryDelay": 300,
+      "backoffMultiplier": 2
+    },
+    "isActive": true,
+    "createdAt": "2024-01-01T08:00:00Z",
+    "updatedAt": "2024-01-01T08:00:00Z"
+  },
+  "email-templates": [
+    {
+      "id": "1",
+      "name": "leave-request",
+      "subject": "Leave Request {{status}} - {{employeeName}}",
+      "body": "Dear {{managerName}},\n\n{{employeeName}} has {{action}} a leave request.\n\nDetails:\nStart Date: {{startDate}}\nEnd Date: {{endDate}}\nType: {{leaveType}}\nReason: {{reason}}\n\nPlease review and take necessary action.\n\nBest regards,\nHR System",
+      "type": "LEAVE_REQUEST",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "leave-approved",
+      "subject": "Leave Request Approved - {{employeeName}}",
+      "body": "Dear {{employeeName}},\n\nYour leave request has been approved.\n\nDetails:\nStart Date: {{startDate}}\nEnd Date: {{endDate}}\nType: {{leaveType}}\n\nManager Comments: {{comments}}\n\nBest regards,\nHR Team",
+      "type": "LEAVE_APPROVED",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "name": "leave-rejected",
+      "subject": "Leave Request Rejected - {{employeeName}}",
+      "body": "Dear {{employeeName}},\n\nYour leave request has been rejected.\n\nDetails:\nStart Date: {{startDate}}\nEnd Date: {{endDate}}\nType: {{leaveType}}\n\nManager Comments: {{comments}}\n\nBest regards,\nHR Team",
+      "type": "LEAVE_REJECTED",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "performance-review",
+      "subject": "Performance Review Reminder - {{employeeName}}",
+      "body": "Dear {{employeeName}},\n\nThis is a reminder that your performance review is due.\n\nPeriod: {{reviewPeriod}}\nDue Date: {{dueDate}}\n\nPlease complete your self-assessment at your earliest convenience.\n\nBest regards,\nHR Team",
+      "type": "PERFORMANCE_REVIEW",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "name": "interview-scheduled",
+      "subject": "Interview Scheduled - {{position}}",
+      "body": "Dear {{candidateName}},\n\nYour interview has been scheduled.\n\nPosition: {{position}}\nDate: {{date}}\nTime: {{time}}\nLocation: {{location}}\nInterviewer: {{interviewerName}}\n\nPlease confirm your attendance.\n\nBest regards,\nHR Team",
+      "type": "INTERVIEW_SCHEDULED",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    },
+    {
+      "id": "6",
+      "name": "password-reset",
+      "subject": "Password Reset Request",
+      "body": "Dear {{employeeName}},\n\nYou have requested to reset your password.\n\nClick the link below to reset your password:\n{{resetLink}}\n\nThis link will expire in 24 hours.\n\nBest regards,\nHR Team",
+      "type": "PASSWORD_RESET",
+      "isActive": true,
+      "createdAt": "2024-01-01T08:00:00Z",
+      "updatedAt": "2024-01-01T08:00:00Z"
+    }
+  ],
+  "email-template-variables": [
+    {
+      "id": "1",
+      "templateId": "1",
+      "name": "status",
+      "description": "Status of the leave request",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "2",
+      "templateId": "1",
+      "name": "employeeName",
+      "description": "Name of the employee requesting leave",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "3",
+      "templateId": "1",
+      "name": "managerName",
+      "description": "Name of the manager",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "4",
+      "templateId": "1",
+      "name": "action",
+      "description": "Action taken on the leave request",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "5",
+      "templateId": "1",
+      "name": "startDate",
+      "description": "Start date of leave",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "6",
+      "templateId": "1",
+      "name": "endDate",
+      "description": "End date of leave",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "7",
+      "templateId": "1",
+      "name": "leaveType",
+      "description": "Type of leave requested",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "8",
+      "templateId": "1",
+      "name": "reason",
+      "description": "Reason for leave",
+      "type": "string",
+      "required": false
+    }
+  ],
+  "email-template-triggers": [
+    {
+      "id": "1",
+      "templateId": "1",
+      "event": "leave.request.submitted",
+      "description": "Triggered when a new leave request is submitted",
+      "recipients": ["manager", "hr"],
+      "cc": ["hr-support@company.com"],
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "templateId": "2",
+      "event": "leave.request.approved",
+      "description": "Triggered when a leave request is approved",
+      "recipients": ["employee"],
+      "cc": [],
+      "isActive": true
+    },
+    {
+      "id": "3",
+      "templateId": "3",
+      "event": "leave.request.rejected",
+      "description": "Triggered when a leave request is rejected",
+      "recipients": ["employee"],
+      "cc": [],
+      "isActive": true
+    },
+    {
+      "id": "4",
+      "templateId": "4",
+      "event": "performance.review.reminder",
+      "description": "Triggered when a performance review is due",
+      "recipients": ["employee", "manager"],
+      "cc": [],
+      "isActive": true
+    },
+    {
+      "id": "5",
+      "templateId": "5",
+      "event": "interview.scheduled",
+      "description": "Triggered when an interview is scheduled",
+      "recipients": ["candidate", "interviewer"],
+      "cc": ["recruitment@company.com"],
+      "isActive": true
+    },
+    {
+      "id": "6",
+      "templateId": "6",
+      "event": "user.password.reset",
+      "description": "Triggered when a password reset is requested",
+      "recipients": ["user"],
+      "cc": [],
+      "isActive": true
+    }
+  ],
+  "attendance": {
+    "status": {
+      "id": "1",
+      "employeeId": "3",
+      "date": "2024-06-14",
+      "status": "PRESENT",
+      "clockIn": "09:00:00",
+      "clockOut": "17:30:00",
+      "totalHours": 8.5,
+      "lateMinutes": 0,
+      "earlyExitMinutes": 0,
+      "createdAt": "2024-06-14T09:00:00Z",
+      "updatedAt": "2024-06-14T17:30:00Z"
+    }
+  }
 }

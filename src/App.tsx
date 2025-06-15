@@ -68,6 +68,9 @@ import NominationForm from './pages/recognition/NominationForm';
 import WinnersGallery from './pages/recognition/WinnersGallery';
 import MyNominations from './pages/recognition/MyNominations';
 
+// Email Configuration
+import EmailConfiguration from './pages/settings/EmailConfiguration';
+
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -188,6 +191,7 @@ const App = () => {
                 <Route path="winners" element={<WinnersGallery />} />
                 <Route path="my-nominations" element={<MyNominations />} />
               </Route>
+              <Route path="/settings/email" element={<ProtectedRoute><MainLayout><EmailConfiguration /></MainLayout></ProtectedRoute>} />
 
               {/* 404 route */}
               <Route 

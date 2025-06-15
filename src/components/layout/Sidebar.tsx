@@ -16,7 +16,8 @@ import {
   GlobeAltIcon,
   ClipboardDocumentCheckIcon,
   StarIcon,
-  TrophyIcon
+  TrophyIcon,
+  EnvelopeIcon
 } from '@heroicons/react/24/outline';
 import './Sidebar.css';
 import { getAuthorizedRoutes, RouteConfig } from '../../config/routes';
@@ -65,7 +66,7 @@ const menuGroups: Record<string, MenuGroup> = {
   },
   system: {
     label: 'System',
-    items: ['settings']
+    items: ['emailConfig', 'settings']
   }
 };
 
@@ -144,7 +145,8 @@ const Sidebar = ({ isOpen, isMobile, closeSidebar }: SidebarProps) => {
     transfers: <ArrowsRightLeftIcon className="icon" />,
     shifts: <ClipboardDocumentCheckIcon className="icon" />,
     goals: <StarIcon className="icon" />,
-    recognition: <TrophyIcon className="icon" />
+    recognition: <TrophyIcon className="icon" />,
+    emailConfig: <EnvelopeIcon className="icon" />
   };
 
   return (

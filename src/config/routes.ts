@@ -150,6 +150,17 @@ const routes: Record<string, RouteConfig> = {
       delete: [UserRole.ADMIN]
     }
   },
+  emailConfig: {
+    id: 'emailConfig',
+    path: '/settings/email',
+    name: 'Email Configuration',
+    description: 'Configure SMTP settings and email templates',
+    icon: 'EnvelopeIcon',
+    permissions: {
+      view: [UserRole.ADMIN],
+      edit: [UserRole.ADMIN]
+    }
+  },
   settings: {
     id: 'settings',
     path: '/settings',
@@ -248,7 +259,7 @@ const menuGroups: Record<string, MenuGroup> = {
   },
   system: {
     label: 'System',
-    items: ['settings']
+    items: ['emailConfig', 'settings']
   }
 };
 
