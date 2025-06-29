@@ -1941,6 +1941,78 @@
       "description": "Reason for leave",
       "type": "string",
       "required": false
+    },
+    {
+      "id": "9",
+      "templateId": "4",
+      "name": "reviewPeriod",
+      "description": "Performance review period",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "10",
+      "templateId": "4",
+      "name": "dueDate",
+      "description": "Due date for performance review",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "11",
+      "templateId": "5",
+      "name": "candidateName",
+      "description": "Name of the job candidate",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "12",
+      "templateId": "5",
+      "name": "position",
+      "description": "Job position being interviewed for",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "13",
+      "templateId": "5",
+      "name": "date",
+      "description": "Interview date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "14",
+      "templateId": "5",
+      "name": "time",
+      "description": "Interview time",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "15",
+      "templateId": "5",
+      "name": "location",
+      "description": "Interview location",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "16",
+      "templateId": "5",
+      "name": "interviewerName",
+      "description": "Name of the interviewer",
+      "type": "string",
+      "required": true
+    },
+    {
+      "id": "17",
+      "templateId": "6",
+      "name": "resetLink",
+      "description": "Password reset link",
+      "type": "string",
+      "required": true
     }
   ],
   "email-template-triggers": [
@@ -1996,6 +2068,24 @@
       "description": "Triggered when a password reset is requested",
       "recipients": ["user"],
       "cc": [],
+      "isActive": true
+    },
+    {
+      "id": "7",
+      "templateId": "4",
+      "event": "performance.review.completed",
+      "description": "Triggered when a performance review is completed",
+      "recipients": ["employee", "manager", "hr"],
+      "cc": [],
+      "isActive": true
+    },
+    {
+      "id": "8",
+      "templateId": "4",
+      "event": "performance.review.overdue",
+      "description": "Triggered when a performance review is overdue",
+      "recipients": ["employee", "manager"],
+      "cc": ["hr-support@company.com"],
       "isActive": true
     }
   ],

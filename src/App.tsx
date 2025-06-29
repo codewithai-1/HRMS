@@ -70,6 +70,8 @@ import MyNominations from './pages/recognition/MyNominations';
 
 // Email Configuration
 import EmailConfiguration from './pages/settings/EmailConfiguration';
+import EmailTemplatesManagement from './pages/settings/EmailTemplatesManagement';
+import EmailVariablesAndTriggers from './pages/settings/EmailVariablesAndTriggers';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -192,6 +194,8 @@ const App = () => {
                 <Route path="my-nominations" element={<MyNominations />} />
               </Route>
               <Route path="/settings/email" element={<ProtectedRoute><MainLayout><EmailConfiguration /></MainLayout></ProtectedRoute>} />
+              <Route path="/settings/email/templates" element={<ProtectedRoute><MainLayout><EmailTemplatesManagement /></MainLayout></ProtectedRoute>} />
+              <Route path="/settings/email/variables-triggers" element={<ProtectedRoute><MainLayout><EmailVariablesAndTriggers /></MainLayout></ProtectedRoute>} />
 
               {/* 404 route */}
               <Route 

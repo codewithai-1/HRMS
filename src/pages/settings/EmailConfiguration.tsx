@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Tab } from '@headlessui/react';
-import { EnvelopeIcon, DocumentTextIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, DocumentTextIcon, PaperAirplaneIcon, VariableIcon, BoltIcon, ArrowPathIcon, CheckCircleIcon, XCircleIcon, MagnifyingGlassIcon, FunnelIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import emailService from '../../services/emailService';
 import './EmailConfiguration.css';
+import { useNavigate } from 'react-router-dom';
 
 interface SMTPConfig {
   host: string;
@@ -12,6 +13,7 @@ interface SMTPConfig {
   encryption: 'none' | 'tls' | 'ssl';
   fromEmail: string;
   fromName: string;
+  useTLS: boolean;
 }
 
 interface EmailTemplate {
@@ -58,7 +60,8 @@ const EmailConfiguration: React.FC = () => {
     password: '',
     encryption: 'tls',
     fromEmail: '',
-    fromName: ''
+    fromName: '',
+    useTLS: true
   });
 
   const [templates, setTemplates] = useState<EmailTemplate[]>([]);
@@ -70,6 +73,8 @@ const EmailConfiguration: React.FC = () => {
   const [availableVariables, setAvailableVariables] = useState<TemplateVariable[]>([]);
   const [availableTriggers, setAvailableTriggers] = useState<TemplateTrigger[]>([]);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchInitialData();
@@ -97,36 +102,43 @@ const EmailConfiguration: React.FC = () => {
     }
   };
 
-  const handleSMTPConfigChange = (field: keyof SMTPConfig, value: string | number) => {
-    setSmtpConfig(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleSaveSMTPConfig = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
+      setIsLoading(true);
       setError(null);
+      setSuccess(null);
       await emailService.updateSMTPConfig(smtpConfig);
-      // Show success message or notification
+      setSuccess('SMTP configuration updated successfully');
     } catch (err) {
-      setError('Failed to save SMTP configuration');
-      console.error('Error saving SMTP config:', err);
+      setError('Failed to update SMTP configuration');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleTestSMTP = async () => {
+  const handleTestConnection = async () => {
     try {
       setIsTesting(true);
-      setError(null);
+      setTestResult(null);
       const result = await emailService.testSMTPConnection(smtpConfig);
       setTestResult(result);
     } catch (err) {
-      setError('Failed to test SMTP connection');
-      console.error('Error testing SMTP:', err);
+      setTestResult({
+        success: false,
+        message: 'Failed to test SMTP connection'
+      });
     } finally {
       setIsTesting(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setSmtpConfig(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
   const handleSaveTemplate = async () => {
@@ -208,250 +220,257 @@ const EmailConfiguration: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="email-config-container">
-        <div className="loading">Loading email configuration...</div>
+      <div className="email-container">
+        <div className="flex items-center justify-center h-64">
+          <div className="loading-spinner" />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="email-config-container">
-      <div className="page-header">
-        <h1>Email Configuration</h1>
-        <p className="text-gray-600">Configure SMTP settings and manage email templates</p>
+    <div className="email-container">
+      {/* Header Section */}
+      <div className="email-header">
+        <div className="header-top-row">
+          <div>
+            <h1 className="email-title">Email Configuration</h1>
+            <p className="email-subtitle">
+              Configure email settings and manage templates
+            </p>
+          </div>
+          <div className="flex space-x-3">
+            <button
+              type="button"
+              onClick={() => navigate('/settings/email/templates')}
+              className="create-button"
+            >
+              <DocumentTextIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+              Manage Templates
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/settings/email/variables-triggers')}
+              className="create-button"
+            >
+              <VariableIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+              Manage Variables & Triggers
+            </button>
+          </div>
+        </div>
       </div>
 
+      {/* Error and Success Messages */}
       {error && (
         <div className="error-message">
-          {error}
+          <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+          <span>{error}</span>
         </div>
       )}
 
-      {testResult && (
-        <div className={`error-message ${testResult.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-          <p className={`text-sm ${testResult.success ? 'text-green-600' : 'text-red-600'}`}>
-            {testResult.message}
-          </p>
-        </div>
-      )}
-
-      <Tab.Group>
-        <Tab.List className="tab-list">
-          <Tab className={({ selected }) => `tab ${selected ? 'selected' : ''}`}>
-            <EnvelopeIcon className="tab-icon" />
-            SMTP Settings
-          </Tab>
-          <Tab className={({ selected }) => `tab ${selected ? 'selected' : ''}`}>
-            <DocumentTextIcon className="tab-icon" />
-            Email Templates
-          </Tab>
-        </Tab.List>
-
-        <Tab.Panels>
-          {/* SMTP Settings Panel */}
-          <Tab.Panel>
-            <div className="config-section">
-              <h2>SMTP Configuration</h2>
-              <div className="form-grid">
-                <div className="form-group">
-                  <label>SMTP Host</label>
-                  <input
-                    type="text"
-                    value={smtpConfig.host}
-                    onChange={(e) => handleSMTPConfigChange('host', e.target.value)}
-                    placeholder="smtp.example.com"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Port</label>
-                  <input
-                    type="number"
-                    value={smtpConfig.port}
-                    onChange={(e) => handleSMTPConfigChange('port', parseInt(e.target.value))}
-                    placeholder="587"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Username</label>
-                  <input
-                    type="text"
-                    value={smtpConfig.username}
-                    onChange={(e) => handleSMTPConfigChange('username', e.target.value)}
-                    placeholder="user@example.com"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input
-                    type="password"
-                    value={smtpConfig.password}
-                    onChange={(e) => handleSMTPConfigChange('password', e.target.value)}
-                    placeholder="••••••••"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Encryption</label>
-                  <select
-                    value={smtpConfig.encryption}
-                    onChange={(e) => handleSMTPConfigChange('encryption', e.target.value as SMTPConfig['encryption'])}
-                  >
-                    <option value="none">None</option>
-                    <option value="tls">TLS</option>
-                    <option value="ssl">SSL</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>From Email</label>
-                  <input
-                    type="email"
-                    value={smtpConfig.fromEmail}
-                    onChange={(e) => handleSMTPConfigChange('fromEmail', e.target.value)}
-                    placeholder="noreply@example.com"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>From Name</label>
-                  <input
-                    type="text"
-                    value={smtpConfig.fromName}
-                    onChange={(e) => handleSMTPConfigChange('fromName', e.target.value)}
-                    placeholder="Company Name"
-                  />
-                </div>
-              </div>
-              <div className="button-group">
-                <button
-                  className="btn btn-primary"
-                  onClick={handleSaveSMTPConfig}
-                >
-                  Save Configuration
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={handleTestSMTP}
-                  disabled={isTesting}
-                >
-                  {isTesting ? 'Testing...' : 'Test Connection'}
-                </button>
-              </div>
+      {success && (
+        <div className="rounded-md bg-green-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
             </div>
-          </Tab.Panel>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-green-800">{success}</h3>
+            </div>
+          </div>
+        </div>
+      )}
 
-          {/* Email Templates Panel */}
-          <Tab.Panel>
-            <div className="config-section">
-              <div className="template-header">
-                <h2>Email Templates</h2>
-                <button 
-                  className="btn btn-primary"
-                  onClick={handleCreateNewTemplate}
-                >
-                  <DocumentTextIcon className="btn-icon" />
-                  New Template
-                </button>
-              </div>
-              
-              <div className="template-grid">
-                <div className="template-list">
-                  {templates.map(template => (
-                    <div
-                      key={template.id}
-                      className={`template-item ${selectedTemplate?.id === template.id ? 'selected' : ''}`}
-                      onClick={() => setSelectedTemplate(template)}
-                    >
-                      <h3>{template.name}</h3>
-                      <p>{template.subject}</p>
-                    </div>
-                  ))}
+      {/* SMTP Configuration Form */}
+      <div className="email-content">
+        <div className="bg-white shadow sm:rounded-lg">
+          <div className="px-4 py-5 sm:p-6">
+            <h3 className="text-base font-semibold leading-6 text-gray-900">SMTP Configuration</h3>
+            <div className="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Configure your SMTP server settings for sending emails.</p>
+            </div>
+            <form onSubmit={handleSubmit} className="mt-5 space-y-6">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="host" className="block text-sm font-medium leading-6 text-gray-900">
+                    SMTP Host
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="host"
+                      id="host"
+                      value={smtpConfig.host}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="smtp.example.com"
+                      required
+                    />
+                  </div>
                 </div>
 
-                {selectedTemplate && (
-                  <div className="template-editor">
-                    <div className="form-group">
-                      <label>Template Name</label>
+                <div>
+                  <label htmlFor="port" className="block text-sm font-medium leading-6 text-gray-900">
+                    Port
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="number"
+                      name="port"
+                      id="port"
+                      value={smtpConfig.port}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="587"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                    Username
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      value={smtpConfig.username}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="user@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                    Password
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      value={smtpConfig.password}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="fromEmail" className="block text-sm font-medium leading-6 text-gray-900">
+                    From Email
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="email"
+                      name="fromEmail"
+                      id="fromEmail"
+                      value={smtpConfig.fromEmail}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="noreply@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="fromName" className="block text-sm font-medium leading-6 text-gray-900">
+                    From Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="fromName"
+                      id="fromName"
+                      value={smtpConfig.fromName}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="Company Name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <div className="relative flex items-start">
+                    <div className="flex h-6 items-center">
                       <input
-                        type="text"
-                        value={selectedTemplate.name}
-                        onChange={(e) => setSelectedTemplate({...selectedTemplate, name: e.target.value})}
+                        type="checkbox"
+                        name="useTLS"
+                        id="useTLS"
+                        checked={smtpConfig.useTLS}
+                        onChange={handleChange}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Subject</label>
-                      <input
-                        type="text"
-                        value={selectedTemplate.subject}
-                        onChange={(e) => setSelectedTemplate({...selectedTemplate, subject: e.target.value})}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Body</label>
-                      <textarea
-                        value={selectedTemplate.body}
-                        onChange={(e) => setSelectedTemplate({...selectedTemplate, body: e.target.value})}
-                        rows={10}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Variables</label>
-                      <div className="variable-list">
-                        {availableVariables.map((variable) => (
-                          <span 
-                            key={variable.id} 
-                            className={`variable-tag ${selectedTemplate?.variables?.includes(`{{${variable.name}}}`) ? 'selected' : ''}`}
-                            onClick={() => handleVariableClick(variable)}
-                            title={variable.description}
-                          >
-                            {`{{${variable.name}}}`}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Triggers</label>
-                      <div className="trigger-list">
-                        {availableTriggers.map((trigger) => (
-                          <span 
-                            key={trigger.id} 
-                            className={`trigger-tag ${selectedTemplate?.triggers?.includes(trigger.event) ? 'selected' : ''}`}
-                            onClick={() => handleTriggerClick(trigger)}
-                            title={trigger.description}
-                          >
-                            {trigger.event}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="button-group">
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleSaveTemplate}
-                      >
-                        Save Template
-                      </button>
-                      <div className="test-email-group">
-                        <input
-                          type="email"
-                          value={testEmail}
-                          onChange={(e) => setTestEmail(e.target.value)}
-                          placeholder="Test email address"
-                        />
-                        <button
-                          className="btn btn-secondary"
-                          onClick={handleTestTemplate}
-                          disabled={!testEmail}
-                        >
-                          <PaperAirplaneIcon className="btn-icon" />
-                          Test Template
-                        </button>
-                      </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label htmlFor="useTLS" className="font-medium text-gray-900">
+                        Use TLS
+                      </label>
+                      <p className="text-gray-500">Enable TLS encryption for secure email transmission</p>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </Tab.Panel>
-        </Tab.Panels>
-      </Tab.Group>
+
+              <div className="flex items-center justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={handleTestConnection}
+                  disabled={isLoading || isTesting}
+                  className="filter-button"
+                >
+                  {isTesting ? (
+                    <ArrowPathIcon className="-ml-0.5 mr-1.5 h-5 w-5 animate-spin text-gray-400" aria-hidden="true" />
+                  ) : (
+                    <EnvelopeIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  )}
+                  Test Connection
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="create-button"
+                >
+                  {isLoading ? (
+                    <ArrowPathIcon className="-ml-0.5 mr-1.5 h-5 w-5 animate-spin" aria-hidden="true" />
+                  ) : (
+                    <CheckCircleIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+                  )}
+                  Save Configuration
+                </button>
+              </div>
+            </form>
+
+            {/* Test Result */}
+            {testResult && (
+              <div className={`mt-4 rounded-md p-4 ${testResult.success ? 'bg-green-50' : 'bg-red-50'}`}>
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    {testResult.success ? (
+                      <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                    ) : (
+                      <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                    )}
+                  </div>
+                  <div className="ml-3">
+                    <h3 className={`text-sm font-medium ${testResult.success ? 'text-green-800' : 'text-red-800'}`}>
+                      {testResult.message}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

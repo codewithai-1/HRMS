@@ -102,6 +102,21 @@ const emailService = {
     }
   },
 
+  createTemplateVariable: async (variable: any) => {
+    const response = await axios.post(`${config.api.baseUrl}/email-template-variables`, variable);
+    return response.data;
+  },
+
+  updateTemplateVariable: async (id: string, variable: any) => {
+    const response = await axios.put(`${config.api.baseUrl}/email-template-variables/${id}`, variable);
+    return response.data;
+  },
+
+  deleteTemplateVariable: async (id: string) => {
+    const response = await axios.delete(`${config.api.baseUrl}/email-template-variables/${id}`);
+    return response.data;
+  },
+
   // Template Triggers
   getTemplateTriggers: async () => {
     try {
@@ -111,6 +126,21 @@ const emailService = {
       // Return default triggers if API call fails
       return defaultTriggers;
     }
+  },
+
+  createTemplateTrigger: async (trigger: any) => {
+    const response = await axios.post(`${config.api.baseUrl}/email-template-triggers`, trigger);
+    return response.data;
+  },
+
+  updateTemplateTrigger: async (id: string, trigger: any) => {
+    const response = await axios.put(`${config.api.baseUrl}/email-template-triggers/${id}`, trigger);
+    return response.data;
+  },
+
+  deleteTemplateTrigger: async (id: string) => {
+    const response = await axios.delete(`${config.api.baseUrl}/email-template-triggers/${id}`);
+    return response.data;
   }
 };
 
